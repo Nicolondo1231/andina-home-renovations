@@ -287,6 +287,8 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .types input:focus-visible + label { outline: 3px solid var(--copper-hi); outline-offset: 2px; }
 .form .btn { width: 100%; }
 .form-note { font-size: 0.88rem; color: var(--steel); }
+.form-consent { font-size: 0.8rem; line-height: 1.5; color: var(--steel); margin: 0 0 12px; }
+.form-consent a { color: var(--copper-text); }
 .form-done { background: var(--stone); border-left: 4px solid var(--copper); border-radius: 8px; padding: 16px 18px; display: grid; gap: 6px; }
 
 /* Footer */
@@ -460,6 +462,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
           <div class="types" id="types"></div>
         </fieldset>
         <div class="field"><label for="f-msg">Tell us a little about it <span class="opt">(optional)</span></label><textarea id="f-msg" name="message" placeholder="Room size, what you want changed, when you’d like to start…"></textarea></div>
+        <p class="form-consent">By submitting, you agree to receive text messages from Andina Home Renovations about your estimate request and appointments. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms</a>.</p>
         <button class="btn btn-copper" type="submit">Send my request</button>
         <p class="form-note">Sending opens your email app with everything filled in. You can also just call or text us.</p>
         <div class="form-done" id="form-done" hidden role="status"></div>
@@ -475,6 +478,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
       <a href="#work">Our Work</a><a href="#process">How It Works</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
       <a href="tel:+12019817239">(201) 981-7239</a>
       <a href="https://www.instagram.com/andinahomerenovations/" target="_blank" rel="noopener">Instagram</a>
+      <a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a>
     </nav>
     <small>© 2026 Andina Home Renovations · General contractors serving New Jersey · andinahomerenovations.com</small>
   </div>
