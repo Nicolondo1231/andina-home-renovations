@@ -392,20 +392,14 @@ body.in-quote .mbar { transform: translateY(110%); }
 .qbadge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(226,164,121,.45); color: var(--white); font-weight: 700; font-size: 0.9rem; }
 .qbadge svg { width: 18px; height: 18px; color: var(--copper-hi); }
 
-/* Bathroom photo behind the headline, fading into the marble behind the form */
-.qhero { --gold: #ffcf5c; --gold-hi: #ffe39a; }
-.qhero-photo { position: absolute; left: 0; right: 0; top: 0; height: 560px; z-index: 1; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 55%, transparent 100%); }
-.qhero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; animation: qdrift 18s ease-out both; }
-.qhero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,8,7,.5) 0%, rgba(10,8,7,.32) 40%, rgba(10,8,7,.55) 75%, rgba(10,8,7,.85) 100%); }
+/* Calacatta marble wall behind the headline, fading into the dark marble behind the form */
+.qhero-photo { position: absolute; left: 0; right: 0; top: 0; height: 600px; z-index: 1; -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%); mask-image: linear-gradient(180deg, #000 50%, transparent 100%); }
+.qhero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; animation: qdrift 18s ease-out both; }
+.qhero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,11,10,.42) 0%, rgba(14,11,10,.5) 45%, rgba(14,11,10,.78) 80%, rgba(14,11,10,.92) 100%); }
 .qhero::before { z-index: 0; }
-.qintro h1 { color: var(--white); text-shadow: 0 2px 4px rgba(0,0,0,.55), 0 8px 30px rgba(0,0,0,.6); }
-.qintro .gold { color: #ffd257; -webkit-text-fill-color: #ffd257; }
-.qstars { color: var(--gold); }
-.qfor { color: var(--gold); text-shadow: 0 1px 3px rgba(0,0,0,.6); }
-.qsub, .qtrusted { color: #f1ece6; text-shadow: 0 1px 3px rgba(0,0,0,.7); }
-.qbadge { background: rgba(10,8,7,.55); border-color: rgba(255,207,92,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-.qbadge svg { color: var(--gold); }
-@media (min-width: 760px) { .qhero-photo { height: 720px; } .qhero-photo img { object-position: 50% 45%; } .qhero-photo::after { background: linear-gradient(180deg, rgba(10,8,7,.55) 0%, rgba(10,8,7,.45) 45%, rgba(10,8,7,.75) 80%, rgba(10,8,7,.9) 100%); } }
+.qintro h1, .qsub, .qtrusted, .qfor { text-shadow: 0 2px 10px rgba(0,0,0,.55); }
+.qintro h1 .metal-text { background: linear-gradient(115deg, #ffe2c8 0%, #f2b184 35%, #e39561 60%, #f7c9a4 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); text-shadow: none; }
+@media (min-width: 760px) { .qhero-photo { height: 760px; } }
 </style>
 </head>
 <body>
@@ -432,14 +426,14 @@ body.in-quote .mbar { transform: translateY(110%); }
 <main id="top">
   <section class="qhero" id="quote">
     <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
-    <div class="qhero-photo" aria-hidden="true"><img src="/images/bath-hero.webp" alt=""></div>
+    <div class="qhero-photo" aria-hidden="true"><img src="/images/calacatta.webp" alt=""></div>
     <div class="qwrap">
       <div class="qintro">
         <div class="qtrust"><div class="qstars" role="img" aria-label="Rated 5 out of 5 stars">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg>
         </div><span class="qtrusted">Trusted by <b>100+</b> homeowners</span></div>
         <p class="qfor">For New Jersey homeowners</p>
-        <h1>Get your <span class="gold">luxury bathroom</span> quote</h1>
+        <h1>Get your <span class="metal-text">luxury bathroom</span> quote</h1>
         <p class="qsub">We’ll schedule a free in-person estimate, price your project, and build the bathroom of your dreams.</p>
         <p class="qbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Licensed &amp; insured</p>
       </div>
