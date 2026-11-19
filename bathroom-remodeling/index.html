@@ -400,6 +400,12 @@ body.in-quote .mbar { transform: translateY(110%); }
 .qintro h1, .qsub, .qtrusted, .qfor { text-shadow: 0 2px 10px rgba(0,0,0,.55); }
 .qintro h1 .metal-text { background: linear-gradient(115deg, #ffe2c8 0%, #f2b184 35%, #e39561 60%, #f7c9a4 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); text-shadow: none; }
 @media (min-width: 760px) { .qhero-photo { height: 760px; } }
+/* Stronger contrast for the small header lines */
+.qintro { position: relative; }
+.qintro::before { content: ""; position: absolute; inset: -18px -24px; z-index: -1; background: radial-gradient(ellipse at 50% 50%, rgba(10,8,7,.55) 0%, rgba(10,8,7,.3) 55%, rgba(10,8,7,0) 75%); pointer-events: none; }
+.qfor { color: #ffc99f; font-size: 0.8rem; letter-spacing: 0.13em; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,.85), 0 2px 10px rgba(0,0,0,.6); }
+.qsub { color: #ffffff; font-weight: 500; font-size: 1.05rem; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 2px 12px rgba(0,0,0,.65); }
+.qtrusted { color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 2px 10px rgba(0,0,0,.6); }
 </style>
 </head>
 <body>
