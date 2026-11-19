@@ -311,9 +311,9 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 /* Bathroom quote funnel (mobile first) */
 .qhero { position: relative; overflow: hidden; background: var(--espresso); color: var(--white); min-height: calc(100svh - 78px); padding: 28px max(16px, env(safe-area-inset-right, 0px)) 40px max(16px, env(safe-area-inset-left, 0px)); display: grid; align-items: start; }
 .qhero-bg { position: absolute; inset: 0; }
-.qhero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 55% 40%; animation: qdrift 18s ease-out both; }
+.qhero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; animation: qdrift 18s ease-out both; }
 @keyframes qdrift { from { transform: scale(1.12); } to { transform: scale(1); } }
-.qhero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(14,11,10,.72) 0%, rgba(14,11,10,.55) 30%, rgba(14,11,10,.78) 70%, rgba(14,11,10,.94) 100%); }
+.qhero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 20%, rgba(14,11,10,.15) 0%, rgba(14,11,10,.45) 70%), linear-gradient(180deg, rgba(14,11,10,0) 60%, rgba(14,11,10,.85) 100%); }
 .qwrap { position: relative; z-index: 2; width: 100%; max-width: 520px; margin-inline: auto; display: grid; gap: 22px; }
 .qintro { display: grid; gap: 10px; justify-items: center; text-align: center; }
 .qstars { display: flex; gap: 4px; color: #f3b56b; }
@@ -411,7 +411,7 @@ body.in-quote .mbar { transform: translateY(110%); }
 
 <main id="top">
   <section class="qhero" id="quote">
-    <div class="qhero-bg" aria-hidden="true"><img src="/images/bath-main-after.webp" alt=""></div>
+    <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
     <div class="qwrap">
       <div class="qintro">
         <div class="qstars" role="img" aria-label="Rated 5 out of 5 stars">
@@ -486,7 +486,7 @@ body.in-quote .mbar { transform: translateY(110%); }
             <label class="qlabel" for="q-phone">Phone number</label>
             <input class="qin" id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(201) 555-0123">
             <p class="qerr" id="err-phone" hidden></p>
-            <p class="qnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Please use a phone number that works. We’ll call you there to schedule your estimate.</p>
+            <p class="qnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Please use a phone number that works so we can confirm your in-person estimate.</p>
             <label class="qlabel" for="q-email">Email</label>
             <input class="qin" id="q-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
             <p class="qerr" id="err-email" hidden></p>
