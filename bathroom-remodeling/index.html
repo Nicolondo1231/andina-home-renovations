@@ -392,6 +392,11 @@ body.in-quote .mbar { transform: translateY(110%); }
 .qbadge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(226,164,121,.45); color: var(--white); font-weight: 700; font-size: 0.9rem; }
 .qbadge svg { width: 18px; height: 18px; color: var(--copper-hi); }
 
+/* Calacatta marble wall behind the headline, fading into the dark marble behind the form */
+.qhero-photo { position: absolute; left: 0; right: 0; top: 0; height: 600px; z-index: 1; -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%); mask-image: linear-gradient(180deg, #000 50%, transparent 100%); }
+.qhero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; animation: qdrift 18s ease-out both; }
+.qhero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,11,10,.42) 0%, rgba(14,11,10,.5) 45%, rgba(14,11,10,.78) 80%, rgba(14,11,10,.92) 100%); }
+@media (min-width: 760px) { .qhero-photo { height: 760px; } }
 .qhero::before { z-index: 0; }
 .qintro h1, .qsub, .qtrusted, .qfor { text-shadow: 0 2px 10px rgba(0,0,0,.55); }
 .qintro h1 .metal-text { background: linear-gradient(115deg, #ffe2c8 0%, #f2b184 35%, #e39561 60%, #f7c9a4 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); text-shadow: none; }
@@ -427,6 +432,7 @@ body.in-quote .mbar { transform: translateY(110%); }
 <main id="top">
   <section class="qhero" id="quote">
     <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
+    <div class="qhero-photo" aria-hidden="true"><img src="/images/calacatta.webp" alt=""></div>
     <div class="qwrap">
       <div class="qintro">
         <div class="qtrust"><div class="qstars" role="img" aria-label="Rated 5 out of 5 stars">
