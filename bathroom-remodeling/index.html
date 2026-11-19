@@ -386,6 +386,11 @@ textarea.qin { resize: vertical; min-height: 110px; }
 .mbar { transition: transform .3s ease; }
 body.in-quote .mbar { transform: translateY(110%); }
 @media (max-width: 760px) { .qhero { padding-top: 20px; } .qwrap { gap: 18px; } .qintro { gap: 8px; } .qsub { font-size: 0.97rem; } }
+.qtrust { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 12px; }
+.qtrusted { font-weight: 600; font-size: 0.95rem; color: #e2dbd4; }
+.qtrusted b { color: var(--white); font-weight: 800; }
+.qbadge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(226,164,121,.45); color: var(--white); font-weight: 700; font-size: 0.9rem; }
+.qbadge svg { width: 18px; height: 18px; color: var(--copper-hi); }
 </style>
 </head>
 <body>
@@ -414,12 +419,13 @@ body.in-quote .mbar { transform: translateY(110%); }
     <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
     <div class="qwrap">
       <div class="qintro">
-        <div class="qstars" role="img" aria-label="Rated 5 out of 5 stars">
+        <div class="qtrust"><div class="qstars" role="img" aria-label="Rated 5 out of 5 stars">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg>
-        </div>
+        </div><span class="qtrusted">Trusted by <b>100+</b> homeowners</span></div>
         <p class="qfor">For New Jersey homeowners</p>
         <h1>Get your <span class="metal-text">luxury bathroom</span> quote</h1>
         <p class="qsub">We’ll schedule a free in-person estimate, price your project, and build the bathroom of your dreams.</p>
+        <p class="qbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Licensed &amp; insured</p>
       </div>
 
       <div class="qcard" id="qcard">
@@ -518,23 +524,14 @@ body.in-quote .mbar { transform: translateY(110%); }
     </div>
   </section>
 
-  <div class="trust" aria-label="At a glance">
-    <div class="wrap">
-      <div class="trust-item"><b>5.0 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></b><span>Homeowner rating</span></div>
-      <div class="trust-item"><b>GC</b><span>General contractor, one crew</span></div>
-      <div class="trust-item"><b>NJ</b><span>Serving all of New Jersey</span></div>
-      <div class="trust-item"><b>Free</b><span>In-home estimates</span></div>
-    </div>
-  </div>
-
   <section class="section work dark" id="work">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Our work</p>
-        <h2>Pick a job. <span class="metal-text">See the difference.</span></h2>
+        <p class="eyebrow">Our bathroom work</p>
+        <h2>Real bathrooms. <span class="metal-text">See the difference.</span></h2>
       </div>
       <div class="work-shell">
-        <div class="jobs" id="jobs" role="group" aria-label="Choose a type of job"></div>
+        <div class="jobs" id="jobs" role="group" aria-label="Choose a bathroom project"></div>
         <div class="viewer">
           <div class="cmp" id="cmp" data-mode="slide">
             <img class="cmp-after" id="img-after" alt="">
@@ -549,20 +546,6 @@ body.in-quote .mbar { transform: translateY(110%); }
             <a href="#quote" id="job-quote">Get a quote for this <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="process">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">How it works</p>
-        <h2>Three simple steps.</h2>
-      </div>
-      <div class="steps">
-        <div class="step"><span class="step-n metal-text">1</span><h3>Reach out</h3><p>Call, text or send the form below. Tell us what room you want to change and roughly when.</p></div>
-        <div class="step"><span class="step-n metal-text">2</span><h3>Walkthrough &amp; estimate</h3><p>We visit your home, listen to what you want, and give you a clear written estimate with no surprises.</p></div>
-        <div class="step"><span class="step-n metal-text">3</span><h3>We build it</h3><p>We keep you updated as the work goes, keep the site tidy, and walk you through the finished space.</p></div>
       </div>
     </div>
   </section>
@@ -587,6 +570,29 @@ body.in-quote .mbar { transform: translateY(110%); }
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust" aria-label="At a glance">
+    <div class="wrap">
+      <div class="trust-item"><b>5.0 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></b><span>Homeowner rating</span></div>
+      <div class="trust-item"><b>100+</b><span>Homeowners served</span></div>
+      <div class="trust-item"><b>NJ</b><span>Serving all of New Jersey</span></div>
+      <div class="trust-item"><b>Free</b><span>In-home estimates</span></div>
+    </div>
+  </div>
+
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Three simple steps.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step-n metal-text">1</span><h3>Reach out</h3><p>Call, text or send the form below. Tell us what room you want to change and roughly when.</p></div>
+        <div class="step"><span class="step-n metal-text">2</span><h3>Walkthrough &amp; estimate</h3><p>We visit your home, listen to what you want, and give you a clear written estimate with no surprises.</p></div>
+        <div class="step"><span class="step-n metal-text">3</span><h3>We build it</h3><p>We keep you updated as the work goes, keep the site tidy, and walk you through the finished space.</p></div>
       </div>
     </div>
   </section>
@@ -662,13 +668,12 @@ body.in-quote .mbar { transform: translateY(110%); }
     exterior: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20"/><path d="M4 21V10l8-6 8 6v11"/><rect x="9" y="13" width="6" height="8"/><path d="M15 5V3h3v4.5"/></svg>'
   };
   var JOBS = [
-    { id: "bath", name: "Bathrooms", title: "Basement bathroom rebuild", b: "bath-basement-before", a: "bath-basement-after" },
-    { id: "kitchen", name: "Kitchens", title: "Kitchen renovation", b: "kitchen-before-2", a: "kitchen-after-2" },
-    { id: "floors", name: "Flooring", title: "Bedroom floors & paint", b: "bedroom-before", a: "bedroom-after" },
-    { id: "stairs", name: "Stairs", title: "Entry staircase & hallway", b: "stairs-before", a: "stairs-after" },
-    { id: "paint", name: "Painting", title: "Sunroom renovation", b: "porch-before", a: "porch-after" },
-    { id: "exterior", name: "Exteriors", title: "Exterior siding paint", b: "siding-before", a: "siding-after" }
+    { id: "full", icon: "bath", name: "Full remodel", title: "Full bathroom remodel", b: "bath-main-before", a: "bath-main-after" },
+    { id: "shower", icon: "shower", name: "Glass shower", title: "Bathroom with new glass shower", b: "bath-narrow-before", a: "bath-narrow-after" },
+    { id: "basement", icon: "basement", name: "Basement bath", title: "Basement bathroom rebuild", b: "bath-basement-before", a: "bath-basement-after" }
   ];
+  ICON.shower = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9a5 5 0 0 1 10 0"/><path d="M11 9h6"/><path d="M12 13v1M15 13v1M18 13v1M12.5 17v1M15.5 17v1M18.5 17v1"/></svg>';
+  ICON.basement = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7v11H3z"/><path d="M3 15h18"/><path d="M8 19h3"/></svg>';
   var HERO = [
     ["bath-main-after", "Full bathroom remodel"],
     ["siding-after", "Exterior siding paint"],
@@ -678,9 +683,9 @@ body.in-quote .mbar { transform: translateY(110%); }
     ["stairs-after", "Entry staircase & hallway"]
   ];
   var REVIEWS = [
-    { name: "Michael R.", img: "kitchen-after-2", text: "Excellent work on our kitchen remodel. The attention to detail was outstanding, and everything came out better than expected." },
+    { name: "Michael R.", img: "bath-narrow-after", text: "Excellent work on our kitchen remodel. The attention to detail was outstanding, and everything came out better than expected." },
     { name: "Jennifer T.", img: "bath-main-after", text: "We hired them to renovate our bathroom, and the results were incredible. Professional, reliable, and great quality work." },
-    { name: "David M.", img: "bedroom-after", text: "Great experience from start to finish. They communicated well, kept everything organized, and delivered beautiful results." }
+    { name: "David M.", img: "bath-basement-after", text: "Great experience from start to finish. They communicated well, kept everything organized, and delivered beautiful results." }
   ];
   var TYPES = ["Bathroom", "Kitchen", "Flooring", "Stairs", "Painting", "Exterior", "Other"];
 
@@ -914,7 +919,7 @@ body.in-quote .mbar { transform: translateY(110%); }
     var b = document.createElement("button");
     b.type = "button"; b.className = "job"; b.dataset.job = j.id;
     b.setAttribute("aria-pressed", "false");
-    b.innerHTML = ICON[j.id].replace("<svg ", '<svg class="ic" ') + "<span>" + esc(j.name) + "</span>" + ICON_RIGHT.replace("<svg ", '<svg class="go" ');
+    b.innerHTML = ICON[j.icon || j.id].replace("<svg ", '<svg class="ic" ') + "<span>" + esc(j.name) + "</span>" + ICON_RIGHT.replace("<svg ", '<svg class="go" ');
     b.addEventListener("click", function () { showJob(j); });
     jobsEl.appendChild(b);
   });
