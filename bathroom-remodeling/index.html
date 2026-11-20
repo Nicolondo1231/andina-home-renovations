@@ -851,6 +851,15 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 
   /* ---------- Bathroom quote funnel ---------- */
   var LEAD_EMAIL = "andinahomerenovations@gmail.com";
+  var PORTAL_HOOK = "";   /* Andina's lead link from the Nevado portal (Info > Formulario de la página web) */
+  /* Keep the ad's UTM tags from the first page view so the lead shows which ad it came from */
+  var UTM = {};
+  try {
+    UTM = JSON.parse(sessionStorage.getItem("andina-utm") || "{}");
+    var qs = new URLSearchParams(location.search), got = false, fresh = {};
+    qs.forEach(function (v, k) { if (/^(utm_\w+|fbclid)$/.test(k) && v) { fresh[k] = v.slice(0, 200); got = true; } });
+    if (got) { UTM = fresh; sessionStorage.setItem("andina-utm", JSON.stringify(UTM)); }
+  } catch (e) {}
   var qform = document.getElementById("qform"), qback = document.getElementById("qback");
   var qstep = document.getElementById("qstep"), qpct = document.getElementById("qpct"), qbar = document.getElementById("qbar"), qtop = document.getElementById("qtop");
   var TOTAL = 6, step = 1, lead = { project: "", timeline: "" };
@@ -979,11 +988,26 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       "_replyto": $("q-email").value.trim()
     };
     btn.disabled = true; btn.textContent = "Sending…"; err("send", "");
-    fetch("https://formsubmit.co/ajax/" + LEAD_EMAIL, {
+    /* The lead goes straight into Andina's CRM (Nevado portal); the email is a backup copy */
+    var crm = {
+      name: data.Name, phone: data.Phone, email: data.Email,
+      project: lead.project === "Other" ? "bathroom project" : lead.project,
+      answers: (lead.project === "Other" ? [["Type of project", "Other"]] : []).concat([["Timeline", data.Timeline], ["Address", data.Address], ["Details", data.Details]]),
+      source: "Landing VSL", page: "Bathroom remodeling landing", utm: UTM
+    };
+    function ok(r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === "false") throw new Error(j.message || j.error || "send failed"); }); }
+    /* text/plain keeps it a simple request (no CORS preflight) */
+    var toCrm = PORTAL_HOOK ? fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(crm) }).then(ok) : Promise.reject(new Error("no crm"));
+    var toEmail = fetch("https://formsubmit.co/ajax/" + LEAD_EMAIL, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(data)
-    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === "false") throw new Error(j.message || "send failed"); }); })
+    }).then(ok);
+    /* Sent as soon as either one has it; it only fails if both fail */
+    new Promise(function (resolve, reject) {
+      var fails = 0;
+      [toCrm, toEmail].forEach(function (p) { p.then(resolve, function () { if (++fails === 2) reject(new Error("send failed")); }); });
+    })
       .then(function () {
         track("Lead", { content_name: "Bathroom quote", content_category: lead.project || "Bathroom", status: lead.timeline || "" });
         showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address });
