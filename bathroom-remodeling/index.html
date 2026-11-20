@@ -443,6 +443,29 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 @media (min-width: 760px) { .ty-video { max-width: 420px; } .ty-video.wide { max-width: none; } }
 .ty-head h1 .metal-text { background: linear-gradient(115deg, #ffe2c8 0%, #f2b184 35%, #e39561 60%, #f7c9a4 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
 .ty-wa { padding: 0 14px; font-size: 0.98rem; white-space: nowrap; gap: 8px; }
+
+/* Booking calendar */
+.cal-days { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 8px; margin: 0 -2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.cal-days::-webkit-scrollbar { display: none; }
+.cal-day { flex: none; scroll-snap-align: start; width: 64px; padding: 10px 0 9px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--white); color: var(--ink); display: grid; justify-items: center; gap: 2px; cursor: pointer; font: inherit; transition: border-color .2s, background .2s, color .2s; -webkit-tap-highlight-color: transparent; }
+.cal-day .dw { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--steel); }
+.cal-day .dn { font-family: var(--display); font-weight: 800; font-size: 1.45rem; line-height: 1.1; }
+.cal-day .dm { font-size: 0.74rem; color: var(--steel); }
+.cal-day[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.cal-day[aria-pressed="true"] .dw, .cal-day[aria-pressed="true"] .dm { color: var(--steel-light); }
+.cal-label { font-weight: 700; font-size: 0.95rem; margin-top: 2px; }
+.cal-times { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cal-time { min-height: 50px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--white); color: var(--ink); font: 700 1rem var(--body); cursor: pointer; transition: border-color .2s, background .2s, color .2s, transform .15s; -webkit-tap-highlight-color: transparent; }
+.cal-time:hover { border-color: var(--copper); color: var(--copper-text); }
+.cal-time:active { transform: scale(.97); }
+.cal-time.picked { background: var(--metal-soft); border-color: transparent; color: var(--white); }
+.cal-times.busy .cal-time:not(.picked) { opacity: .45; pointer-events: none; }
+.cal-times.busy .cal-time.picked { pointer-events: none; }
+.ty-appt { display: flex; align-items: center; gap: 14px; text-align: left; background: rgba(250,248,245,.96); color: var(--ink); border-radius: 16px; padding: 14px 18px; width: 100%; box-shadow: 0 20px 50px -20px rgba(0,0,0,.7); }
+.ty-appt-ic { width: 44px; height: 44px; flex: none; border-radius: 12px; background: var(--metal-soft); color: #fff; display: grid; place-items: center; }
+.ty-appt-ic svg { width: 22px; height: 22px; }
+.ty-appt strong { display: block; font-size: 1.05rem; }
+.ty-appt #ty-where { display: block; color: var(--steel); font-size: 0.92rem; }
 </style>
 </head>
 <body>
@@ -474,6 +497,10 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         <span class="ty-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <h1 id="ty-title">Your in-person estimate has been <span class="metal-text">scheduled!</span></h1>
         <p class="ty-sub" id="ty-sub">We’ll call you shortly to confirm the day and time.</p>
+        <div class="ty-appt" id="ty-appt" hidden>
+          <span class="ty-appt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+          <span><strong id="ty-when"></strong><span id="ty-where"></span></span>
+        </div>
       </div>
 
       <div class="ty-watch">
@@ -580,10 +607,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             <label class="qlabel" for="q-street">Street address</label>
             <input class="qin" id="q-street" name="street" autocomplete="address-line1" placeholder="123 Main St">
             <p class="qerr" id="err-street" hidden></p>
-            <div class="qrow">
-              <div><label class="qlabel" for="q-unit">Apt <span class="opt">(optional)</span></label><input class="qin" id="q-unit" name="unit" autocomplete="address-line2"></div>
-              <div><label class="qlabel" for="q-city">Town</label><input class="qin" id="q-city" name="city" autocomplete="address-level2"></div>
-            </div>
+            <label class="qlabel" for="q-city">Town</label>
+            <input class="qin" id="q-city" name="city" autocomplete="address-level2" placeholder="Paterson">
             <p class="qerr" id="err-city" hidden></p>
             <button type="button" class="btn btn-copper qnext" data-next="4">Continue</button>
           </fieldset>
@@ -604,15 +629,17 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             <button type="button" class="btn btn-copper qnext" data-next="5">Continue</button>
           </fieldset>
 
-          <!-- Step 6: details + submit -->
+          <!-- Step 6: pick a day and time; tapping a time books it -->
           <fieldset class="qpane" data-step="6">
-            <legend class="qq">Anything we should know before we visit?</legend>
-            <label class="qlabel" for="q-details">Details <span class="opt">(optional)</span></label>
-            <textarea class="qin" id="q-details" name="details" rows="4" placeholder="Bathroom size, style you like, when you’d like to start…"></textarea>
+            <legend class="qq">Pick a day and time for your free estimate</legend>
+            <p class="qhint">Tap a day, then a time. That’s it.</p>
+            <div class="cal-days" id="cal-days" role="group" aria-label="Choose a day"></div>
+            <p class="cal-label" id="cal-label"></p>
+            <div class="cal-times" id="cal-times" role="group" aria-label="Choose a time"></div>
+            <div class="qcheck" id="cal-booking" hidden><span class="spin" aria-hidden="true"></span><span id="cal-booking-text">Booking your estimate…</span></div>
             <input type="text" name="_honey" class="qhp" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <p class="qconsent">By submitting, you agree to receive calls and text messages from Andina Home Renovations about your estimate request and appointments. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms</a>.</p>
-            <button type="submit" class="btn btn-copper qnext" id="qsubmit">Get my free quote</button>
             <p class="qerr" id="err-send" hidden></p>
+            <p class="qconsent">By choosing a time, you agree to receive calls and text messages from Andina Home Renovations about your estimate and appointments. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms</a>.</p>
           </fieldset>
 
           <!-- Not a fit: project is more than a month out -->
@@ -814,6 +841,13 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   var VSL_URL = "";              /* YouTube, Vimeo or .mp4 link for the video; empty shows a placeholder */
   var VSL_VERTICAL = true;       /* true for a 9:16 phone video, false for 16:9 */
   var WHATSAPP_NUMBER = "12019817239";
+  /* Booking calendar: which days and times homeowners can pick */
+  var BOOKING = {
+    daysAhead: 14,          /* how many days ahead people can book */
+    closedDays: [0],        /* 0 = Sunday, 6 = Saturday */
+    times: ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"],
+    minNoticeHours: 12      /* no bookings sooner than this */
+  };
 
   /* Meta Pixel: loads only once an ID is set. PageView on load, Lead when the quote is sent. */
   if (META_PIXEL_ID) {
@@ -833,9 +867,14 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     var ty = document.getElementById("thank-you");
     if (info && info.first) {
       document.getElementById("ty-title").innerHTML = esc(info.first) + ", your in-person estimate has been <span class=\"metal-text\">scheduled!</span>";
-      document.getElementById("ty-sub").textContent = "We’ll call you at " + info.phone + " shortly to confirm the day and time.";
+      document.getElementById("ty-sub").textContent = info.when ? "We’ll call you at " + info.phone + " if anything changes." : "We’ll call you at " + info.phone + " shortly to confirm the day and time.";
+      if (info.when) {
+        document.getElementById("ty-when").textContent = info.when;
+        document.getElementById("ty-where").textContent = info.address;
+        document.getElementById("ty-appt").hidden = false;
+      }
     }
-    var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I just requested an in-person estimate for my bathroom" + (info && info.address ? " at " + info.address : "") + ". I’d like to confirm or reschedule it.";
+    var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I just booked an in-person estimate for my bathroom" + (info && info.when ? " on " + info.when : "") + (info && info.address ? " at " + info.address : "") + ". I’d like to confirm or reschedule it.";
     document.getElementById("ty-wa").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
     var box = document.getElementById("ty-video");
     box.classList.toggle("wide", !VSL_VERTICAL);
@@ -967,32 +1006,79 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     var b = pane(step).querySelector(".qnext"); if (b) b.click();
   });
 
-  qform.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (step !== TOTAL) return;
+  /* Step 6: calendar. Tapping a time books the estimate right away. */
+  var calDays = $("cal-days"), calTimes = $("cal-times"), calLabel = $("cal-label");
+  var DAY_FMT = { weekday: "long", month: "long", day: "numeric" };
+  function parseTime(d, t) {
+    var m = t.match(/(\d+):(\d+)\s*(AM|PM)/i), h = +m[1] % 12 + (/pm/i.test(m[3]) ? 12 : 0);
+    var x = new Date(d); x.setHours(h, +m[2], 0, 0); return x;
+  }
+  function openDays() {
+    var out = [], d = new Date(); d.setHours(0, 0, 0, 0);
+    var earliest = Date.now() + BOOKING.minNoticeHours * 3600e3;
+    for (var i = 0; out.length < BOOKING.daysAhead && i < 60; i++) {
+      var day = new Date(d); day.setDate(d.getDate() + i);
+      if (BOOKING.closedDays.indexOf(day.getDay()) > -1) continue;
+      var slots = BOOKING.times.filter(function (t) { return parseTime(day, t).getTime() >= earliest; });
+      if (slots.length) out.push({ date: day, slots: slots });
+    }
+    return out;
+  }
+  var DAYS = [], curDay = null, booking = false;
+  function renderDays() {
+    DAYS = openDays();
+    calDays.innerHTML = "";
+    DAYS.forEach(function (o, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "cal-day";
+      b.setAttribute("aria-label", o.date.toLocaleDateString("en-US", DAY_FMT));
+      b.innerHTML = '<span class="dw">' + o.date.toLocaleDateString("en-US", { weekday: "short" }) + '</span><span class="dn">' + o.date.getDate() + '</span><span class="dm">' + o.date.toLocaleDateString("en-US", { month: "short" }) + "</span>";
+      b.addEventListener("click", function () { if (!booking) pickDay(i); });
+      calDays.appendChild(b);
+    });
+    if (DAYS.length) pickDay(0);
+  }
+  function pickDay(i) {
+    curDay = DAYS[i];
+    calDays.querySelectorAll(".cal-day").forEach(function (b, k) { b.setAttribute("aria-pressed", k === i); });
+    calLabel.textContent = "Available times on " + curDay.date.toLocaleDateString("en-US", DAY_FMT);
+    calTimes.innerHTML = "";
+    curDay.slots.forEach(function (t) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "cal-time"; b.textContent = t;
+      b.addEventListener("click", function () { if (!booking) book(curDay.date, t, b); });
+      calTimes.appendChild(b);
+    });
+  }
+  renderDays();
+
+  function book(day, time, btn) {
     if (qform.elements._honey.value) return;
-    var btn = $("qsubmit");
+    booking = true;
+    btn.classList.add("picked"); calTimes.classList.add("busy");
+    var when = day.toLocaleDateString("en-US", DAY_FMT) + " at " + time;
+    $("cal-booking").hidden = false; $("cal-booking").classList.remove("ok"); $("cal-booking-text").textContent = "Booking " + when + "…";
+    err("send", "");
     var data = {
+      "Appointment": when,
       "Project": lead.project || "Not selected",
       "Timeline": lead.timeline || "Not selected",
       "ZIP": zip.value,
-      "Address": $("q-street").value.trim() + ($("q-unit").value.trim() ? ", " + $("q-unit").value.trim() : "") + ", " + $("q-city").value.trim() + " " + zip.value,
+      "Address": $("q-street").value.trim() + ", " + $("q-city").value.trim() + ", NJ " + zip.value,
       "Name": $("q-name").value.trim(),
       "Phone": phone.value,
       "Email": $("q-email").value.trim(),
-      "Details": $("q-details").value.trim() || "-",
       "Page": "Bathroom remodeling quote",
-      "_subject": "New bathroom quote: " + $("q-name").value.trim() + " (" + (lead.project || "Bathroom") + ")",
+      "_subject": "New estimate booked: " + $("q-name").value.trim() + ", " + when,
       "_template": "table",
       "_captcha": "false",
       "_replyto": $("q-email").value.trim()
     };
-    btn.disabled = true; btn.textContent = "Sending…"; err("send", "");
     /* The lead goes straight into Andina's CRM (Nevado portal); the email is a backup copy */
     var crm = {
       name: data.Name, phone: data.Phone, email: data.Email,
       project: lead.project === "Other" ? "bathroom project" : lead.project,
-      answers: (lead.project === "Other" ? [["Type of project", "Other"]] : []).concat([["Timeline", data.Timeline], ["Address", data.Address], ["Details", data.Details]]),
+      answers: (lead.project === "Other" ? [["Type of project", "Other"]] : []).concat([["Appointment", when], ["Timeline", data.Timeline], ["Address", data.Address]]),
       source: "Landing VSL", page: "Bathroom remodeling landing", utm: UTM
     };
     function ok(r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === "false") throw new Error(j.message || j.error || "send failed"); }); }
@@ -1003,23 +1089,29 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(data)
     }).then(ok);
-    /* Sent as soon as either one has it; it only fails if both fail */
+    /* Booked as soon as either one has it; it only fails if both fail */
     new Promise(function (resolve, reject) {
       var fails = 0;
       [toCrm, toEmail].forEach(function (p) { p.then(resolve, function () { if (++fails === 2) reject(new Error("send failed")); }); });
     })
       .then(function () {
+        $("cal-booking").classList.add("ok"); $("cal-booking-text").textContent = "Booked!";
         track("Lead", { content_name: "Bathroom quote", content_category: lead.project || "Bathroom", status: lead.timeline || "" });
-        showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address });
+        track("Schedule", { content_name: "In-person estimate" });
+        setTimeout(function () {
+          showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address, when: when });
+        }, 600);
       })
       .catch(function () {
-        btn.disabled = false; btn.textContent = "Get my free quote";
+        booking = false;
+        btn.classList.remove("picked"); calTimes.classList.remove("busy"); $("cal-booking").hidden = true;
         var body = Object.keys(data).filter(function (k) { return k[0] !== "_"; }).map(function (k) { return k + ": " + data[k]; }).join("\n");
         var e2 = $("err-send");
-        e2.innerHTML = "We couldn’t send your request. Please call <a href=\"tel:+12019817239\">(201) 981-7239</a> or <a href=\"mailto:" + LEAD_EMAIL + "?subject=" + encodeURIComponent(data._subject) + "&body=" + encodeURIComponent(body) + "\">send it by email</a>.";
+        e2.innerHTML = "We couldn’t book that time. Please try again, call <a href=\"tel:+12019817239\">(201) 981-7239</a> or <a href=\"mailto:" + LEAD_EMAIL + "?subject=" + encodeURIComponent(data._subject) + "&body=" + encodeURIComponent(body) + "\">send it by email</a>.";
         e2.hidden = false;
       });
-  });
+  }
+  qform.addEventListener("submit", function (e) { e.preventDefault(); });
 
   /* Hide the bottom call bar while the quote card is on screen so it never covers answers */
   if ("IntersectionObserver" in window) {
