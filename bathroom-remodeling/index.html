@@ -329,7 +329,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .qstep { font-weight: 700; font-size: 0.92rem; }
 .qpct { margin-left: auto; font-size: 0.85rem; color: var(--steel); font-variant-numeric: tabular-nums; }
 .qbar { height: 6px; border-radius: 6px; background: var(--stone); overflow: hidden; margin: 10px 0 18px; }
-.qbar i { display: block; height: 100%; width: 20%; background: var(--metal); border-radius: 6px; transition: width .45s cubic-bezier(.3,.8,.3,1); }
+.qbar i { display: block; height: 100%; width: 17%; background: var(--metal); border-radius: 6px; transition: width .45s cubic-bezier(.3,.8,.3,1); }
 
 .qpane { border: 0; padding: 0; margin: 0; min-width: 0; display: none; }
 .qpane.on { display: grid; gap: 10px; animation: qin .35s ease both; }
@@ -454,8 +454,8 @@ body.in-quote .mbar { transform: translateY(110%); }
       <div class="qcard" id="qcard">
         <div class="qtop" id="qtop">
           <button type="button" class="qback" id="qback" aria-label="Go back a step" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-          <span class="qstep" id="qstep" aria-live="polite">Step 1 of 5</span>
-          <span class="qpct" id="qpct">20%</span>
+          <span class="qstep" id="qstep" aria-live="polite">Step 1 of 6</span>
+          <span class="qpct" id="qpct">17%</span>
         </div>
         <div class="qbar" aria-hidden="true"><i id="qbar"></i></div>
 
@@ -479,8 +479,31 @@ body.in-quote .mbar { transform: translateY(110%); }
             </div>
           </fieldset>
 
-          <!-- Step 2: availability by ZIP -->
+          <!-- Step 2: timeline (more than a month = not a fit right now) -->
           <fieldset class="qpane" data-step="2">
+            <legend class="qq">When are you looking to get this project done?</legend>
+            <div class="qopts">
+              <button type="button" class="qopt qtime" data-val="As soon as possible" data-ok="1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+                <span>As soon as possible</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="qopt qtime" data-val="In the next 2 weeks" data-ok="1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3"/></svg>
+                <span>In the next 2 weeks</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="qopt qtime" data-val="This month" data-ok="1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h8M8 17h5"/></svg>
+                <span>This month</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="qopt qtime" data-val="More than a month from now" data-ok="0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span>More than a month from now</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </fieldset>
+
+          <!-- Step 3: availability by ZIP -->
+          <fieldset class="qpane" data-step="3">
             <legend class="qq">Check availability</legend>
             <label class="qlabel" for="q-zip">Where is your bathroom? Enter your ZIP code.</label>
             <input class="qin qzip" id="q-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
@@ -488,11 +511,11 @@ body.in-quote .mbar { transform: translateY(110%); }
             <div class="qcheck" id="qcheck" hidden>
               <span class="spin" aria-hidden="true"></span><span id="qcheck-text">Checking availability in your area…</span>
             </div>
-            <button type="button" class="btn btn-copper qnext" data-next="2">Check availability</button>
+            <button type="button" class="btn btn-copper qnext" data-next="3">Check availability</button>
           </fieldset>
 
-          <!-- Step 3: service address -->
-          <fieldset class="qpane" data-step="3">
+          <!-- Step 4: service address -->
+          <fieldset class="qpane" data-step="4">
             <legend class="qq">Where do you need us?</legend>
             <p class="qhint">The address where we’ll do your free in-person estimate.</p>
             <label class="qlabel" for="q-street">Street address</label>
@@ -503,11 +526,11 @@ body.in-quote .mbar { transform: translateY(110%); }
               <div><label class="qlabel" for="q-city">Town</label><input class="qin" id="q-city" name="city" autocomplete="address-level2"></div>
             </div>
             <p class="qerr" id="err-city" hidden></p>
-            <button type="button" class="btn btn-copper qnext" data-next="3">Continue</button>
+            <button type="button" class="btn btn-copper qnext" data-next="4">Continue</button>
           </fieldset>
 
-          <!-- Step 4: contact -->
-          <fieldset class="qpane" data-step="4">
+          <!-- Step 5: contact -->
+          <fieldset class="qpane" data-step="5">
             <legend class="qq">Where should we contact you?</legend>
             <label class="qlabel" for="q-name">Full name</label>
             <input class="qin" id="q-name" name="name" autocomplete="name">
@@ -519,11 +542,11 @@ body.in-quote .mbar { transform: translateY(110%); }
             <label class="qlabel" for="q-email">Email</label>
             <input class="qin" id="q-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
             <p class="qerr" id="err-email" hidden></p>
-            <button type="button" class="btn btn-copper qnext" data-next="4">Continue</button>
+            <button type="button" class="btn btn-copper qnext" data-next="5">Continue</button>
           </fieldset>
 
-          <!-- Step 5: details + submit -->
-          <fieldset class="qpane" data-step="5">
+          <!-- Step 6: details + submit -->
+          <fieldset class="qpane" data-step="6">
             <legend class="qq">Anything we should know before we visit?</legend>
             <label class="qlabel" for="q-details">Details <span class="opt">(optional)</span></label>
             <textarea class="qin" id="q-details" name="details" rows="4" placeholder="Bathroom size, style you like, when you’d like to start…"></textarea>
@@ -533,8 +556,16 @@ body.in-quote .mbar { transform: translateY(110%); }
             <p class="qerr" id="err-send" hidden></p>
           </fieldset>
 
+          <!-- Not a fit: project is more than a month out -->
+          <div class="qpane qdone qdq" data-step="dq" role="status">
+            <span class="qdone-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h2>Thanks for your interest!</h2>
+            <p>Right now we’re only scheduling bathroom projects that can start within the next month. When you’re closer to your start date, come back and we’ll get you a free quote.</p>
+            <button type="button" class="btn btn-ghost" id="qdq-back">Change my answer</button>
+          </div>
+
           <!-- Done -->
-          <div class="qpane qdone" data-step="6" role="status">
+          <div class="qpane qdone" data-step="7" role="status">
             <span class="qdone-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
             <h2 id="qdone-title">You’re all set!</h2>
             <p id="qdone-text">We’ll call you shortly to schedule your free in-person estimate.</p>
@@ -723,7 +754,7 @@ body.in-quote .mbar { transform: translateY(110%); }
   var LEAD_EMAIL = "andinahomerenovations@gmail.com";
   var qform = document.getElementById("qform"), qback = document.getElementById("qback");
   var qstep = document.getElementById("qstep"), qpct = document.getElementById("qpct"), qbar = document.getElementById("qbar"), qtop = document.getElementById("qtop");
-  var TOTAL = 5, step = 1, lead = { project: "" };
+  var TOTAL = 6, step = 1, lead = { project: "", timeline: "" };
   function $(id) { return document.getElementById(id); }
   function pane(n) { return qform.querySelector('.qpane[data-step="' + n + '"]'); }
   function go(n, backwards) {
@@ -732,7 +763,7 @@ body.in-quote .mbar { transform: translateY(110%); }
     next.classList.toggle("back", !!backwards);
     next.classList.add("on");
     step = n;
-    var done = n > TOTAL;
+    var done = n === "dq" || n > TOTAL;
     qtop.hidden = done; qbar.parentNode.hidden = done;
     qback.hidden = n === 1 || done;
     qstep.textContent = "Step " + n + " of " + TOTAL;
@@ -752,13 +783,24 @@ body.in-quote .mbar { transform: translateY(110%); }
   qback.addEventListener("click", function () { if (step > 1) go(step - 1, true); });
 
   /* Step 1: tap an option, move on automatically */
-  qform.querySelectorAll(".qopt").forEach(function (b) {
+  qform.querySelectorAll('.qpane[data-step="1"] .qopt').forEach(function (b) {
     b.addEventListener("click", function () {
-      qform.querySelectorAll(".qopt").forEach(function (x) { x.classList.toggle("picked", x === b); });
+      qform.querySelectorAll('.qpane[data-step="1"] .qopt').forEach(function (x) { x.classList.toggle("picked", x === b); });
       lead.project = b.dataset.val;
       setTimeout(function () { go(2); }, 220);
     });
   });
+
+  /* Step 2: timeline. More than a month out is not a fit right now. */
+  qform.querySelectorAll(".qtime").forEach(function (b) {
+    b.addEventListener("click", function () {
+      qform.querySelectorAll(".qtime").forEach(function (x) { x.classList.toggle("picked", x === b); });
+      lead.timeline = b.dataset.val;
+      var ok = b.dataset.ok === "1";
+      setTimeout(function () { go(ok ? 3 : "dq"); }, 220);
+    });
+  });
+  $("qdq-back").addEventListener("click", function () { go(2, true); });
 
   /* Step 2: ZIP + availability check */
   var zip = $("q-zip"), checking = false;
@@ -776,7 +818,7 @@ body.in-quote .mbar { transform: translateY(110%); }
       box.classList.add("ok");
       txt.textContent = nj ? "Good news! We have openings in your area." : "We mainly serve New Jersey, but we’ll review your request.";
       lead.zip = z;
-      setTimeout(function () { checking = false; box.hidden = true; go(3); }, nj ? 1000 : 1800);
+      setTimeout(function () { checking = false; box.hidden = true; go(4); }, nj ? 1000 : 1800);
     }, 1100);
   }
 
@@ -792,13 +834,13 @@ body.in-quote .mbar { transform: translateY(110%); }
   ["street", "city", "name", "email"].forEach(function (id) { $("q-" + id).addEventListener("input", function () { err(id, ""); }); });
 
   function validate(n) {
-    if (n === 2) { checkZip(); return false; }
-    if (n === 3) {
+    if (n === 3) { checkZip(); return false; }
+    if (n === 4) {
       var a = err("street", $("q-street").value.trim().length < 4 ? "Please enter the street address." : "");
       var b = err("city", $("q-city").value.trim() ? "" : "Please enter your town.");
       return a && b;
     }
-    if (n === 4) {
+    if (n === 5) {
       var okName = err("name", $("q-name").value.trim().length < 2 ? "Please enter your name." : "");
       var okPhone = err("phone", phone.value.replace(/\D/g, "").length === 10 ? "" : "Please enter a 10-digit phone number.");
       var em = $("q-email").value.trim();
@@ -824,6 +866,7 @@ body.in-quote .mbar { transform: translateY(110%); }
     var btn = $("qsubmit");
     var data = {
       "Project": lead.project || "Not selected",
+      "Timeline": lead.timeline || "Not selected",
       "ZIP": zip.value,
       "Address": $("q-street").value.trim() + ($("q-unit").value.trim() ? ", " + $("q-unit").value.trim() : "") + ", " + $("q-city").value.trim() + " " + zip.value,
       "Name": $("q-name").value.trim(),
