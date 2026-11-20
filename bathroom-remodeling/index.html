@@ -988,8 +988,48 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     return true;
   }
   qform.querySelectorAll(".qnext[data-next]").forEach(function (b) {
-    b.addEventListener("click", function () { var n = +b.dataset.next; if (validate(n)) go(n + 1); });
+    b.addEventListener("click", function () { var n = +b.dataset.next; if (validate(n)) { go(n + 1); if (n === 4) sendContact(); } });
   });
+
+  /* ---------- Andina's CRM (Nevado portal) ---------- */
+  /* The contact info goes in as soon as it is filled in. If they book, the CRM gets the estimate;
+     if they leave without booking, it is announced as a new lead (the portal also checks every 5 minutes). */
+  var contactSent = false, bookedDone = false;
+  function crmLead() {
+    var addr = $("q-street").value.trim() + ", NJ " + zip.value;
+    return {
+      name: $("q-name").value.trim(), phone: phone.value, email: $("q-email").value.trim(),
+      project: lead.project === "Other" ? "bathroom project" : lead.project,
+      answers: (lead.project === "Other" ? [["Type of project", "Other"]] : []).concat([["Timeline", lead.timeline || "Not selected"], ["Address", addr]]),
+      source: "Landing VSL", page: "Bathroom remodeling landing", utm: UTM
+    };
+  }
+  function sendContact() {
+    if (!PORTAL_HOOK || bookedDone) return;
+    var body = crmLead(); body.partial = true;
+    fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body), keepalive: true })
+      .then(function (r) { if (r.ok) contactSent = true; }).catch(function () {});
+  }
+  function leftWithoutBooking() {
+    if (!contactSent || bookedDone || !PORTAL_HOOK) return;
+    var body = crmLead(); body.finalize = true;
+    var s = JSON.stringify(body);
+    if (navigator.sendBeacon && navigator.sendBeacon(PORTAL_HOOK, s)) { contactSent = false; return; }
+    try { fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: s, keepalive: true }); contactSent = false; } catch (e) {}
+  }
+  window.addEventListener("pagehide", leftWithoutBooking);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") leftWithoutBooking(); });
+  /* The picked day and time as a moment in New Jersey time, whatever the visitor's own time zone */
+  function njEpoch(day, time) {
+    var m = time.match(/(\d+):(\d+)\s*(AM|PM)/i), h = +m[1] % 12 + (/pm/i.test(m[3]) ? 12 : 0);
+    var guess = Date.UTC(day.getFullYear(), day.getMonth(), day.getDate(), h, +m[2]);
+    try {
+      var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })
+        .formatToParts(new Date(guess)).forEach(function (x) { p[x.type] = +x.value; });
+      var shown = Date.UTC(p.year, p.month - 1, p.day, p.hour % 24, p.minute);
+      return guess + (guess - shown);
+    } catch (e) { return parseTime(day, time).getTime(); }
+  }
   /* Enter moves forward instead of submitting early */
   qform.addEventListener("keydown", function (e) {
     if (e.key !== "Enter" || e.target.tagName === "TEXTAREA" || step >= TOTAL) return;
@@ -1066,12 +1106,10 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       "_replyto": $("q-email").value.trim()
     };
     /* The lead goes straight into Andina's CRM (Nevado portal); the email is a backup copy */
-    var crm = {
-      name: data.Name, phone: data.Phone, email: data.Email,
-      project: lead.project === "Other" ? "bathroom project" : lead.project,
-      answers: (lead.project === "Other" ? [["Type of project", "Other"]] : []).concat([["Appointment", when], ["Timeline", data.Timeline], ["Address", data.Address]]),
-      source: "Landing VSL", page: "Bathroom remodeling landing", utm: UTM
-    };
+    var crm = crmLead();
+    crm.answers.unshift(["Appointment", when]);
+    crm.appointment = { start: njEpoch(day, time), minutes: 60, label: when, address: data.Address };
+    bookedDone = true;
     function ok(r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === "false") throw new Error(j.message || j.error || "send failed"); }); }
     /* text/plain keeps it a simple request (no CORS preflight) */
     var toCrm = PORTAL_HOOK ? fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(crm) }).then(ok) : Promise.reject(new Error("no crm"));
@@ -1094,7 +1132,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         }, 600);
       })
       .catch(function () {
-        booking = false;
+        booking = false; bookedDone = false;
         btn.classList.remove("picked"); calTimes.classList.remove("busy"); $("cal-booking").hidden = true;
         var body = Object.keys(data).filter(function (k) { return k[0] !== "_"; }).map(function (k) { return k + ": " + data[k]; }).join("\n");
         var e2 = $("err-send");
