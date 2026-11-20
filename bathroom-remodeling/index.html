@@ -329,7 +329,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .qstep { font-weight: 700; font-size: 0.92rem; }
 .qpct { margin-left: auto; font-size: 0.85rem; color: var(--steel); font-variant-numeric: tabular-nums; }
 .qbar { height: 6px; border-radius: 6px; background: var(--stone); overflow: hidden; margin: 10px 0 18px; }
-.qbar i { display: block; height: 100%; width: 17%; background: var(--metal); border-radius: 6px; transition: width .45s cubic-bezier(.3,.8,.3,1); }
+.qbar i { display: block; height: 100%; width: 20%; background: var(--metal); border-radius: 6px; transition: width .45s cubic-bezier(.3,.8,.3,1); }
 
 .qpane { border: 0; padding: 0; margin: 0; min-width: 0; display: none; }
 .qpane.on { display: grid; gap: 10px; animation: qin .35s ease both; }
@@ -466,6 +466,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .ty-appt-ic svg { width: 22px; height: 22px; }
 .ty-appt strong { display: block; font-size: 1.05rem; }
 .ty-appt #ty-where { display: block; color: var(--steel); font-size: 0.92rem; }
+.page-consent { width: 100%; font-size: 0.78rem; line-height: 1.55; color: var(--steel-light); opacity: .85; max-width: 80ch; }
+.page-consent a { color: inherit; text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -540,8 +542,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       <div class="qcard" id="qcard">
         <div class="qtop" id="qtop">
           <button type="button" class="qback" id="qback" aria-label="Go back a step" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-          <span class="qstep" id="qstep" aria-live="polite">Step 1 of 6</span>
-          <span class="qpct" id="qpct">17%</span>
+          <span class="qstep" id="qstep" aria-live="polite">Step 1 of 5</span>
+          <span class="qpct" id="qpct">20%</span>
         </div>
         <div class="qbar" aria-hidden="true"><i id="qbar"></i></div>
 
@@ -588,11 +590,15 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             </div>
           </fieldset>
 
-          <!-- Step 3: availability by ZIP -->
+          <!-- Step 3: service address + ZIP, then the availability check -->
           <fieldset class="qpane" data-step="3">
-            <legend class="qq">Check availability</legend>
-            <label class="qlabel" for="q-zip">Where is your bathroom? Enter your ZIP code.</label>
-            <input class="qin qzip" id="q-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="ZIP code">
+            <legend class="qq">Where do you need us?</legend>
+            <p class="qhint">The address where we’ll do your free in-person estimate.</p>
+            <label class="qlabel" for="q-street">Street address</label>
+            <input class="qin" id="q-street" name="street" autocomplete="address-line1" placeholder="123 Main St">
+            <p class="qerr" id="err-street" hidden></p>
+            <label class="qlabel" for="q-zip">ZIP code</label>
+            <input class="qin" id="q-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="07501">
             <p class="qerr" id="err-zip" hidden></p>
             <div class="qcheck" id="qcheck" hidden>
               <span class="spin" aria-hidden="true"></span><span id="qcheck-text">Checking availability in your area…</span>
@@ -600,21 +606,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             <button type="button" class="btn btn-copper qnext" data-next="3">Check availability</button>
           </fieldset>
 
-          <!-- Step 4: service address -->
+          <!-- Step 4: contact -->
           <fieldset class="qpane" data-step="4">
-            <legend class="qq">Where do you need us?</legend>
-            <p class="qhint">The address where we’ll do your free in-person estimate.</p>
-            <label class="qlabel" for="q-street">Street address</label>
-            <input class="qin" id="q-street" name="street" autocomplete="address-line1" placeholder="123 Main St">
-            <p class="qerr" id="err-street" hidden></p>
-            <label class="qlabel" for="q-city">Town</label>
-            <input class="qin" id="q-city" name="city" autocomplete="address-level2" placeholder="Paterson">
-            <p class="qerr" id="err-city" hidden></p>
-            <button type="button" class="btn btn-copper qnext" data-next="4">Continue</button>
-          </fieldset>
-
-          <!-- Step 5: contact -->
-          <fieldset class="qpane" data-step="5">
             <legend class="qq">Where should we contact you?</legend>
             <label class="qlabel" for="q-name">Full name</label>
             <input class="qin" id="q-name" name="name" autocomplete="name">
@@ -626,11 +619,11 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             <label class="qlabel" for="q-email">Email</label>
             <input class="qin" id="q-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com">
             <p class="qerr" id="err-email" hidden></p>
-            <button type="button" class="btn btn-copper qnext" data-next="5">Continue</button>
+            <button type="button" class="btn btn-copper qnext" data-next="4">Continue</button>
           </fieldset>
 
-          <!-- Step 6: pick a day and time; tapping a time books it -->
-          <fieldset class="qpane" data-step="6">
+          <!-- Step 5: pick a day and time; tapping a time books it -->
+          <fieldset class="qpane" data-step="5">
             <legend class="qq">Pick a day and time for your free estimate</legend>
             <p class="qhint">Tap a day, then a time. That’s it.</p>
             <div class="cal-days" id="cal-days" role="group" aria-label="Choose a day"></div>
@@ -639,7 +632,6 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
             <div class="qcheck" id="cal-booking" hidden><span class="spin" aria-hidden="true"></span><span id="cal-booking-text">Booking your estimate…</span></div>
             <input type="text" name="_honey" class="qhp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <p class="qerr" id="err-send" hidden></p>
-            <p class="qconsent">By choosing a time, you agree to receive calls and text messages from Andina Home Renovations about your estimate and appointments. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms</a>.</p>
           </fieldset>
 
           <!-- Not a fit: project is more than a month out -->
@@ -651,7 +643,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
           </div>
 
           <!-- Done -->
-          <div class="qpane qdone" data-step="7" role="status">
+          <div class="qpane qdone" data-step="6" role="status">
             <span class="qdone-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
             <h2 id="qdone-title">You’re all set!</h2>
             <p id="qdone-text">We’ll call you shortly to schedule your free in-person estimate.</p>
@@ -783,6 +775,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       <a href="https://www.instagram.com/andinahomerenovations/" target="_blank" rel="noopener">Instagram</a>
       <a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms</a>
     </nav>
+    <p class="page-consent">By booking a time, you agree to receive calls and text messages from Andina Home Renovations about your estimate and appointments. Msg frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms</a>.</p>
     <small>© 2026 Andina Home Renovations · General contractors serving New Jersey · andinahomerenovations.com</small>
   </div>
 </footer>
@@ -901,7 +894,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   } catch (e) {}
   var qform = document.getElementById("qform"), qback = document.getElementById("qback");
   var qstep = document.getElementById("qstep"), qpct = document.getElementById("qpct"), qbar = document.getElementById("qbar"), qtop = document.getElementById("qtop");
-  var TOTAL = 6, step = 1, lead = { project: "", timeline: "" };
+  var TOTAL = 5, step = 1, lead = { project: "", timeline: "" };
   function $(id) { return document.getElementById(id); }
   function pane(n) { return qform.querySelector('.qpane[data-step="' + n + '"]'); }
   function go(n, backwards) {
@@ -951,7 +944,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 
   /* Step 2: ZIP + availability check */
   var zip = $("q-zip"), checking = false;
-  zip.addEventListener("input", function () { zip.value = zip.value.replace(/\D/g, "").slice(0, 5); err("zip", ""); if (zip.value.length === 5) checkZip(); });
+  zip.addEventListener("input", function () { zip.value = zip.value.replace(/\D/g, "").slice(0, 5); err("zip", ""); });
   function checkZip() {
     if (checking) return;
     var z = zip.value;
@@ -978,16 +971,14 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     phone.value = d.length > 6 ? "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6) : d.length > 3 ? "(" + d.slice(0, 3) + ") " + d.slice(3) : d;
     err("phone", "");
   });
-  ["street", "city", "name", "email"].forEach(function (id) { $("q-" + id).addEventListener("input", function () { err(id, ""); }); });
+  ["street", "name", "email"].forEach(function (id) { $("q-" + id).addEventListener("input", function () { err(id, ""); }); });
 
   function validate(n) {
-    if (n === 3) { checkZip(); return false; }
-    if (n === 4) {
-      var a = err("street", $("q-street").value.trim().length < 4 ? "Please enter the street address." : "");
-      var b = err("city", $("q-city").value.trim() ? "" : "Please enter your town.");
-      return a && b;
+    if (n === 3) {
+      if (err("street", $("q-street").value.trim().length < 4 ? "Please enter the street address." : "")) checkZip();
+      return false;
     }
-    if (n === 5) {
+    if (n === 4) {
       var okName = err("name", $("q-name").value.trim().length < 2 ? "Please enter your name." : "");
       var okPhone = err("phone", phone.value.replace(/\D/g, "").length === 10 ? "" : "Please enter a 10-digit phone number.");
       var em = $("q-email").value.trim();
@@ -1064,7 +1055,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       "Project": lead.project || "Not selected",
       "Timeline": lead.timeline || "Not selected",
       "ZIP": zip.value,
-      "Address": $("q-street").value.trim() + ", " + $("q-city").value.trim() + ", NJ " + zip.value,
+      "Address": $("q-street").value.trim() + ", NJ " + zip.value,
       "Name": $("q-name").value.trim(),
       "Phone": phone.value,
       "Email": $("q-email").value.trim(),
