@@ -1,6 +1,20 @@
 {
   "redirects": [
-    { "source": "/bathroom-remodel", "destination": "/bathroom-remodeling", "permanent": true },
-    { "source": "/bathroom", "destination": "/bathroom-remodeling", "permanent": true }
+    {
+      "source": "/bathroom-remodel",
+      "destination": "/bathroom-remodeling",
+      "permanent": true
+    },
+    {
+      "source": "/bathroom",
+      "destination": "/bathroom-remodeling",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/bathroom-remodeling/thank-you",
+      "destination": "/bathroom-remodeling/index.html"
+    }
   ]
 }

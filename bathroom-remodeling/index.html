@@ -413,6 +413,36 @@ body.in-quote .mbar { transform: translateY(110%); }
 .qintro h1 .metal-text { filter: drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
 .qfor, .qsub, .qtrusted { text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .qstars svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+
+/* Thank-you view (same page, shown after the form is sent) */
+body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important; }
+.ty-wrap { gap: 22px; }
+.ty-head { display: grid; gap: 12px; justify-items: center; text-align: center; }
+.ty-check { width: 76px; height: 76px; color: #4ade80; filter: drop-shadow(0 6px 18px rgba(74,222,128,.35)); }
+.ty-check svg { width: 100%; height: 100%; }
+.ty-check circle { stroke-dasharray: 151; stroke-dashoffset: 151; animation: tydraw .6s ease-out .1s forwards; }
+.ty-check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tydraw .4s ease-out .6s forwards; }
+@keyframes tydraw { to { stroke-dashoffset: 0; } }
+.ty-head h1 { font-size: clamp(1.9rem, 8vw, 2.9rem); font-weight: 850; font-stretch: 110%; letter-spacing: -0.02em; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
+.ty-sub { color: #ffffff; font-size: 1.05rem; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.ty-watch { display: grid; justify-items: center; gap: 6px; margin-top: 4px; }
+.ty-before { font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 1.35rem; color: #ffc99f; text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
+.ty-arrow { width: 34px; height: 34px; color: #ffc99f; animation: tybounce 1.3s ease-in-out infinite; }
+.ty-arrow svg { width: 100%; height: 100%; }
+@keyframes tybounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+.ty-video { position: relative; width: 100%; aspect-ratio: 9 / 16; max-height: 78svh; margin-inline: auto; border-radius: 18px; overflow: hidden; background: #0d0b0a; border: 1.5px solid rgba(226,164,121,.45); box-shadow: 0 30px 70px -20px rgba(0,0,0,.8); }
+.ty-video.wide { aspect-ratio: 16 / 9; max-height: none; }
+.ty-video iframe, .ty-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.ty-video-ph { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 16px; padding: 24px; text-align: center; background: radial-gradient(ellipse at 50% 40%, rgba(184,103,59,.25), rgba(13,11,10,0) 70%); }
+.ty-video-ph p { color: #ffffff; font-weight: 700; font-size: 1.1rem; max-width: 22ch; line-height: 1.35; }
+.ty-play { width: 76px; height: 76px; border-radius: 50%; background: var(--metal-soft); color: #fff; display: grid; place-items: center; box-shadow: 0 0 0 10px rgba(184,103,59,.18); }
+.ty-play svg { width: 34px; height: 34px; margin-left: 4px; }
+.ty-wa { width: 100%; min-height: 58px; background: #25d366; color: #0b2915; font-size: 1.05rem; box-shadow: 0 10px 26px -10px rgba(37,211,102,.6); }
+.ty-wa:hover { background: #2ee374; }
+.ty-wa svg { width: 22px; height: 22px; }
+@media (min-width: 760px) { .ty-video { max-width: 420px; } .ty-video.wide { max-width: none; } }
+.ty-head h1 .metal-text { background: linear-gradient(115deg, #ffe2c8 0%, #f2b184 35%, #e39561 60%, #f7c9a4 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
+.ty-wa { padding: 0 14px; font-size: 0.98rem; white-space: nowrap; gap: 8px; }
 </style>
 </head>
 <body>
@@ -437,6 +467,35 @@ body.in-quote .mbar { transform: translateY(110%); }
 </header>
 
 <main id="top">
+  <section class="qhero ty" id="thank-you" hidden>
+    <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
+    <div class="qwrap ty-wrap">
+      <div class="ty-head">
+        <span class="ty-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h1 id="ty-title">Your in-person estimate has been <span class="metal-text">scheduled!</span></h1>
+        <p class="ty-sub" id="ty-sub">We’ll call you shortly to confirm the day and time.</p>
+      </div>
+
+      <div class="ty-watch">
+        <p class="ty-before">Before we go, watch this</p>
+        <span class="ty-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span>
+      </div>
+
+      <div class="ty-video" id="ty-video">
+        <div class="ty-video-ph">
+          <span class="ty-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <p>Watch this before we do your in-person estimate</p>
+        </div>
+      </div>
+
+      <a class="btn ty-wa" id="ty-wa" href="https://wa.me/12019817239" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.7-.3-1.5-.7-2.4-1.6-.7-.6-1.1-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.3-.4v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>
+        Confirm or reschedule on WhatsApp
+      </a>
+      <p class="qcall">Questions? Call us at <a href="tel:+12019817239">(201) 981-7239</a></p>
+    </div>
+  </section>
+
   <section class="qhero" id="quote">
     <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
     <div class="qhero-photo" aria-hidden="true"><img src="/images/calacatta.webp" alt=""></div>
@@ -750,6 +809,46 @@ body.in-quote .mbar { transform: translateY(110%); }
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
+  /* ---------- Settings for the thank-you view ---------- */
+  var META_PIXEL_ID = "";        /* paste your Meta Pixel ID here, e.g. "123456789012345" */
+  var VSL_URL = "";              /* YouTube, Vimeo or .mp4 link for the video; empty shows a placeholder */
+  var VSL_VERTICAL = true;       /* true for a 9:16 phone video, false for 16:9 */
+  var WHATSAPP_NUMBER = "12019817239";
+
+  /* Meta Pixel: loads only once an ID is set. PageView on load, Lead when the quote is sent. */
+  if (META_PIXEL_ID) {
+    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init", META_PIXEL_ID);
+    fbq("track", "PageView");
+  }
+  function track(ev, params) { if (window.fbq && META_PIXEL_ID) fbq("track", ev, params || {}); }
+
+  function videoEmbed(url) {
+    var m;
+    if ((m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))) return '<iframe src="https://www.youtube.com/embed/' + m[1] + '?rel=0&playsinline=1" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    if ((m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/))) return '<iframe src="https://player.vimeo.com/video/' + m[1] + '?playsinline=1" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    return '<video src="' + url.replace(/"/g, "") + '" controls playsinline preload="metadata"></video>';
+  }
+  function showThankYou(info) {
+    var ty = document.getElementById("thank-you");
+    if (info && info.first) {
+      document.getElementById("ty-title").innerHTML = esc(info.first) + ", your in-person estimate has been <span class=\"metal-text\">scheduled!</span>";
+      document.getElementById("ty-sub").textContent = "We’ll call you at " + info.phone + " shortly to confirm the day and time.";
+    }
+    var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I just requested an in-person estimate for my bathroom" + (info && info.address ? " at " + info.address : "") + ". I’d like to confirm or reschedule it.";
+    document.getElementById("ty-wa").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
+    var box = document.getElementById("ty-video");
+    box.classList.toggle("wide", !VSL_VERTICAL);
+    if (VSL_URL) box.innerHTML = videoEmbed(VSL_URL);
+    ty.hidden = false;
+    document.body.classList.add("ty-on");
+    window.scrollTo(0, 0);
+    try { if (location.pathname.indexOf("/thank-you") < 0 && /\/bathroom-remodeling\/?$/.test(location.pathname)) history.pushState({ ty: 1 }, "", "/bathroom-remodeling/thank-you"); } catch (_) {}
+  }
+  window.addEventListener("popstate", function () { if (document.body.classList.contains("ty-on") && !/\/thank-you\/?$/.test(location.pathname)) location.reload(); });
+  /* Opening /bathroom-remodeling/thank-you directly shows the view without counting a new lead */
+  if (/\/thank-you\/?$/.test(location.pathname) || location.hash === "#thank-you") showThankYou(null);
+
   /* ---------- Bathroom quote funnel ---------- */
   var LEAD_EMAIL = "andinahomerenovations@gmail.com";
   var qform = document.getElementById("qform"), qback = document.getElementById("qback");
@@ -886,10 +985,8 @@ body.in-quote .mbar { transform: translateY(110%); }
       body: JSON.stringify(data)
     }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) === "false") throw new Error(j.message || "send failed"); }); })
       .then(function () {
-        var first = data.Name.split(" ")[0];
-        $("qdone-title").textContent = "You’re all set, " + first + "!";
-        $("qdone-text").textContent = "We’ll call you at " + data.Phone + " shortly to schedule your free in-person estimate.";
-        go(TOTAL + 1);
+        track("Lead", { content_name: "Bathroom quote", content_category: lead.project || "Bathroom", status: lead.timeline || "" });
+        showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address });
       })
       .catch(function () {
         btn.disabled = false; btn.textContent = "Get my free quote";
