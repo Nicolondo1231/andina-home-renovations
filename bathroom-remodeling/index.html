@@ -470,6 +470,22 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .page-consent a { color: inherit; text-decoration: underline; }
 
 /* ---------- Below the fold (bathroom landing) ---------- */
+.rv-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+.rv-track::-webkit-scrollbar { display: none; }
+.rv-slide { flex: 0 0 100%; scroll-snap-align: center; margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: grid; }
+@media (min-width: 900px) { .rv-slide { flex-basis: calc((100% - 16px) / 2); } }
+.rv-slide img { width: 100%; height: auto; aspect-ratio: 1400 / 788; object-fit: cover; display: block; }
+.rv-body { padding: 18px 20px 22px; display: grid; gap: 10px; }
+.rv-body .stars { display: flex; gap: 3px; color: #e0953f; }
+.rv-body .stars svg { width: 18px; height: 18px; }
+.rv-body blockquote { margin: 0; font-size: 1.05rem; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.rv-body figcaption { color: var(--steel); font-size: 0.92rem; }
+.rv-body figcaption b { color: var(--ink); }
+.rv-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.rv-dots button { width: 10px; height: 10px; padding: 0; border-radius: 999px; border: 0; background: var(--line); cursor: pointer; transition: width .25s, background .25s; }
+.rv-dots button[aria-current="true"] { width: 28px; background: var(--copper); }
+.founders-cta { display: flex; justify-content: center; margin-top: 30px; }
+.founders-cta .btn { min-width: 260px; }
 .founders-photo { margin: 0; border-radius: 20px; overflow: hidden; background: var(--espresso); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
 .founders-photo img { width: 100%; height: auto; display: block; }
 .founders-photo figcaption { display: grid; gap: 2px; text-align: center; padding: 16px 16px 20px; color: var(--white); }
@@ -494,8 +510,10 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .ba-card figcaption .stars { color: #f3b56b; }
 .ba-card figcaption .stars svg { width: 16px; height: 16px; }
 .ba-head { justify-items: center; text-align: center; }
+.ba-head { gap: 18px; }
+.ba-rule { display: block; width: 72px; height: 2px; border-radius: 2px; background: var(--metal); }
 .ba-stars { display: flex; gap: 6px; color: #f3b56b; }
-.ba-stars svg { width: 26px; height: 26px; }
+.ba-stars svg { width: 20px; height: 20px; }
 .ba-cta { margin-top: 34px; display: flex; justify-content: center; }
 .founders .wrap { display: grid; gap: 36px; }
 .founder-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
@@ -718,8 +736,9 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   <section class="section dark" id="work">
     <div class="wrap">
       <div class="section-head ba-head">
-        <div class="ba-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></div>
         <h2>Luxury bathrooms <span class="metal-text">before &amp; after</span></h2>
+        <span class="ba-rule" aria-hidden="true"></span>
+        <div class="ba-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></div>
       </div>
       <div class="ba-grid">
         <figure class="ba-card ba-feature"><img src="/images/ba-feature.webp" alt="Full bathroom remodel, before and after" width="1400" height="788"><figcaption>Full bathroom remodel<span class="stars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></span></figcaption></figure>
@@ -755,8 +774,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         <h2>The people behind every bathroom.</h2>
       </div>
       <figure class="founders-photo">
-        <img src="/images/founders.webp" alt="Nicolas and Sebastian, founders of Andina Home Renovations" width="1536" height="1024" loading="lazy">
-        <figcaption><strong>Nicolas &amp; Sebastian</strong><span>Founders, Andina Home Renovations</span></figcaption>
+        <img src="/images/founders.webp" alt="Sebastian and Nicolas, founders of Andina Home Renovations" width="1536" height="1024" loading="lazy">
+        <figcaption><strong>Sebastian &amp; Nicolas</strong><span>Founders, Andina Home Renovations</span></figcaption>
       </figure>
       <p class="story-line">5 years remodeling New Jersey bathrooms. One of us comes to your home for the estimate.</p>
       <ul class="checks">
@@ -767,29 +786,13 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         <li><span class="chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><b>Respectful</b><small>With you, your family and your home.</small></span></li>
       </ul>
     </div>
+      <div class="wrap founders-cta"><a class="btn btn-copper" href="#quote">Book my free estimate</a></div>
   </section>
 
-  <section class="section reviews" id="reviews">
+  <section class="section reviews" id="reviews" aria-label="Homeowner reviews">
     <div class="wrap">
-      <div class="rev-shell">
-        <div class="rev-photo" id="rev-photo">
-          <div class="score"><b>5.0</b><div><div class="stars" aria-hidden="true" id="score-stars"></div><small>Every review, 5 stars</small></div></div>
-        </div>
-        <div class="rev-main">
-          <div class="section-head" style="margin:0">
-            <p class="eyebrow">Reviews</p>
-            <h2>What homeowners say.</h2>
-          </div>
-          <div class="rev-stage" id="rev-stage" aria-live="polite"></div>
-          <div class="rev-controls">
-            <div class="rev-people" id="rev-people" role="group" aria-label="Choose a review"></div>
-            <div class="arrows">
-              <button type="button" id="rev-prev" aria-label="Previous review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-              <button type="button" id="rev-next" aria-label="Next review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="rv-track" id="rv-track"></div>
+      <div class="rv-dots" id="rv-dots" role="group" aria-label="Choose a review"></div>
     </div>
   </section>
 
@@ -1214,59 +1217,26 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   /* "Get a quote for this" buttons on this page go back to the quote form */
   function preselectType() { document.getElementById("quote").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); }
 
-  /* ---------- Reviews carousel ---------- */
-  var revSection = document.getElementById("reviews"), stage = document.getElementById("rev-stage"), people = document.getElementById("rev-people"), photo = document.getElementById("rev-photo");
-  document.getElementById("score-stars").innerHTML = STARS5;
-  var quoteSvg = '<svg class="quote-mark" viewBox="0 0 54 40" aria-hidden="true"><defs><linearGradient id="qg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f2c7a3"/><stop offset=".5" stop-color="#b8673b"/><stop offset="1" stop-color="#e2a479"/></linearGradient></defs><path fill="url(#qg)" d="M0 40V24C0 10 7 2 21 0l2 6C15 8 12 13 12 19h10v21zm31 0V24C31 10 38 2 52 0l2 6c-8 2-11 7-11 13h10v21z"/></svg>';
-  REVIEWS.forEach(function (r, i) {
-    var img = new Image(); img.src = IMG + r.img + ".webp"; img.alt = ""; img.loading = "lazy";
-    photo.insertBefore(img, photo.firstChild);
-    r._img = img;
-    var card = document.createElement("figure");
-    card.className = "rev-card"; card.style.margin = "0";
-    card.innerHTML = quoteSvg + '<div class="stars" role="img" aria-label="5 out of 5 stars">' + STARS5 + "</div><blockquote>" + esc(r.text) + '</blockquote><figcaption class="who"><strong>' + esc(r.name) + "</strong> · Homeowner, New Jersey</figcaption>";
-    stage.appendChild(card);
-    r._card = card;
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "person";
-    b.innerHTML = '<span class="av">' + esc(r.name.charAt(0)) + "</span>" + esc(r.name) + '<span class="bar"></span>';
-    b.addEventListener("click", function () { goRev(i, true); });
-    people.appendChild(b);
-    r._btn = b;
-  });
-  var revIdx = -1, revTimer = null, REV_MS = 7000, revVisible = false, revHover = false;
-  function goRev(i) {
-    var next = (i + REVIEWS.length) % REVIEWS.length;
-    REVIEWS.forEach(function (r, k) {
-      r._card.classList.toggle("on", k === next);
-      r._card.classList.toggle("out", k === revIdx && k !== next);
-      r._img.classList.toggle("on", k === next);
-      r._btn.setAttribute("aria-pressed", k === next);
-      r._card.setAttribute("aria-hidden", k !== next);
+  /* ---------- Reviews: swipe through before/afters, each with a review ---------- */
+  (function () {
+    var track = document.getElementById("rv-track"), dots = document.getElementById("rv-dots");
+    var pics = ["ba-feature", "ba-wide-1", "ba-wide-6"];
+    REVIEWS.forEach(function (r, i) {
+      var f = document.createElement("figure"); f.className = "rv-slide";
+      f.innerHTML = '<img src="/images/' + pics[i % pics.length] + '.webp" alt="Bathroom before and after" loading="lazy" width="1400" height="788">' +
+        '<div class="rv-body"><div class="stars" role="img" aria-label="5 out of 5 stars">' + STARS5 + '</div><blockquote>“' + esc(r.text) + '”</blockquote><figcaption><b>' + esc(r.name) + '</b> · Homeowner, New Jersey</figcaption></div>';
+      track.appendChild(f);
+      var d = document.createElement("button"); d.type = "button"; d.setAttribute("aria-label", "Review " + (i + 1));
+      d.addEventListener("click", function () { track.scrollTo({ left: f.offsetLeft - track.offsetLeft, behavior: REDUCED ? "auto" : "smooth" }); });
+      dots.appendChild(d);
     });
-    var bar = REVIEWS[next]._btn.querySelector(".bar");
-    bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
-    revIdx = next;
-    schedule();
-  }
-  function schedule() {
-    clearTimeout(revTimer);
-    var paused = REDUCED || !revVisible || revHover;
-    revSection.classList.toggle("paused", paused);
-    if (!paused) revTimer = setTimeout(function () { goRev(revIdx + 1); }, REV_MS);
-  }
-  document.getElementById("rev-prev").addEventListener("click", function () { goRev(revIdx - 1); });
-  document.getElementById("rev-next").addEventListener("click", function () { goRev(revIdx + 1); });
-  revSection.addEventListener("mouseenter", function () { revHover = true; schedule(); });
-  revSection.addEventListener("mouseleave", function () { revHover = false; schedule(); });
-  var sx = null;
-  stage.addEventListener("pointerdown", function (e) { sx = e.clientX; });
-  stage.addEventListener("pointerup", function (e) { if (sx !== null && Math.abs(e.clientX - sx) > 40) goRev(revIdx + (e.clientX < sx ? 1 : -1)); sx = null; });
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (es) { revVisible = es[0].isIntersecting; schedule(); }, { threshold: 0.35 }).observe(revSection);
-  } else { revVisible = true; }
-  goRev(0);
-  if (REDUCED) REVIEWS[0]._btn.querySelector(".bar").style.width = "100%";
+    function mark() {
+      var w = track.firstChild ? track.firstChild.offsetWidth + 16 : 1, k = Math.round(track.scrollLeft / w);
+      Array.prototype.forEach.call(dots.children, function (d, i) { d.setAttribute("aria-current", i === k ? "true" : "false"); });
+    }
+    track.addEventListener("scroll", function () { requestAnimationFrame(mark); }, { passive: true });
+    mark();
+  })();
 
   /* ---------- Copy buttons ---------- */
   document.querySelectorAll("[data-copy]").forEach(function (b) {
