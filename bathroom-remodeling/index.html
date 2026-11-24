@@ -435,7 +435,24 @@ body.in-quote .mbar { transform: translateY(110%); }
 .qstars svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
 
 /* Thank-you view (same page, shown after the form is sent) */
-body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important; }
+body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq), body.ty-on .mbar, body.ty-on .ba-cta { display: none !important; }
+.ty-next { background: rgba(250,248,245,.97); color: var(--ink); border-radius: 18px; padding: 22px 20px; display: grid; gap: 12px; box-shadow: 0 30px 70px -20px rgba(0,0,0,.75); }
+.ty-step { font-family: var(--display); font-stretch: 125%; font-weight: 700; font-size: 0.75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--copper-text); }
+.ty-next h2 { font-size: 1.45rem; font-weight: 850; font-stretch: 108%; }
+.ty-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ty-list li { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.ty-list span { width: 28px; height: 28px; flex: none; border-radius: 50%; background: #25d366; color: #0b2915; display: grid; place-items: center; font-weight: 800; font-size: 0.9rem; }
+.ty-why { color: var(--steel); font-size: 0.93rem; }
+.faq-wrap { max-width: 820px; }
+.faq-list { display: grid; gap: 10px; }
+.faq-item { background: var(--white); border: 1px solid var(--line); border-radius: 14px; }
+.faq-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; font-weight: 700; font-size: 1.05rem; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-ic { position: relative; width: 18px; height: 18px; flex: none; }
+.faq-ic::before, .faq-ic::after { content: ""; position: absolute; left: 0; right: 0; top: 8px; height: 2px; border-radius: 2px; background: var(--copper); transition: transform .25s; }
+.faq-ic::after { transform: rotate(90deg); }
+.faq-item[open] .faq-ic::after { transform: rotate(0); }
+.faq-item p { padding: 0 20px 18px; color: var(--steel); line-height: 1.6; }
 .ty-wrap { gap: 22px; }
 .ty-head { display: grid; gap: 12px; justify-items: center; text-align: center; }
 .ty-check { width: 76px; height: 76px; color: #4ade80; filter: drop-shadow(0 6px 18px rgba(74,222,128,.35)); }
@@ -443,6 +460,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .ty-check circle { stroke-dasharray: 151; stroke-dashoffset: 151; animation: tydraw .6s ease-out .1s forwards; }
 .ty-check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tydraw .4s ease-out .6s forwards; }
 @keyframes tydraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .ty-check circle, .ty-check path { stroke-dashoffset: 0; } }
 .ty-head h1 { font-size: clamp(1.9rem, 8vw, 2.9rem); font-weight: 850; font-stretch: 110%; letter-spacing: -0.02em; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
 .ty-sub { color: #ffffff; font-size: 1.05rem; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .ty-watch { display: grid; justify-items: center; gap: 6px; margin-top: 4px; }
@@ -602,21 +620,20 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         </div>
       </div>
 
-      <div class="ty-watch">
-        <p class="ty-before">Before we go, watch this</p>
-        <span class="ty-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span>
-      </div>
-
-      <div class="ty-video" id="ty-video">
-        <div class="ty-video-ph">
-          <span class="ty-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
-          <p>Watch this before we do your in-person estimate</p>
-        </div>
+      <div class="ty-next">
+        <p class="ty-step">One last step</p>
+        <h2>Confirm on WhatsApp &amp; send us photos</h2>
+        <ul class="ty-list">
+          <li><span>1</span>Confirm your appointment</li>
+          <li><span>2</span>Send photos of your bathroom as it is now</li>
+          <li><span>3</span>Send pictures of how you’d like it to look (Pinterest, Instagram, anything)</li>
+        </ul>
+        <p class="ty-why">It helps us come prepared and give you a more accurate price at your estimate.</p>
       </div>
 
       <a class="btn ty-wa" id="ty-wa" href="https://wa.me/12019817239" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.7-.3-1.5-.7-2.4-1.6-.7-.6-1.1-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.3-.4v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg>
-        Confirm or reschedule on WhatsApp
+        Confirm &amp; send photos on WhatsApp
       </a>
       <p class="qcall">Questions? Call us at <a href="tel:+12019817239">(201) 981-7239</a></p>
     </div>
@@ -839,6 +856,23 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     </div>
   </section>
 
+  <section class="section" id="faq">
+    <div class="wrap faq-wrap">
+      <div class="section-head">
+        <p class="eyebrow">FAQs</p>
+        <h2>Questions homeowners ask us.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item"><summary>How much does a bathroom remodel cost?<span class="faq-ic" aria-hidden="true"></span></summary><p>Honestly, it depends a lot on what you’re looking for and what budget feels right for you. What we always try to do is find a price that doesn’t break the bank, one that’s comfortable for you, so you can get the bathroom you want without some crazy number.</p></details>
+        <details class="faq-item"><summary>How long will my bathroom be out of commission?<span class="faq-ic" aria-hidden="true"></span></summary><p>Most of our bathrooms take one to two weeks. That’s it. If your project needs more time, we’ll talk about it up front so there are no surprises.</p></details>
+        <details class="faq-item"><summary>Do I have to pick everything out myself?<span class="faq-ic" aria-hidden="true"></span></summary><p>Not at all. We help you choose your tile, vanity, fixtures and finishes, and we show you how your bathroom is going to look before we start. If you already have ideas, even better.</p></details>
+        <details class="faq-item"><summary>Who’s actually doing the work?<span class="faq-ic" aria-hidden="true"></span></summary><p>Us. The same team you meet is the team that builds your bathroom, start to finish.</p></details>
+        <details class="faq-item"><summary>Is it going to be a mess?<span class="faq-ic" aria-hidden="true"></span></summary><p>We protect everything: your floors, the path to the bathroom and the rest of your home. And we clean up as we go.</p></details>
+        <details class="faq-item"><summary>Are you licensed and insured?<span class="faq-ic" aria-hidden="true"></span></summary><p>Yes, fully licensed and insured in New Jersey.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section class="section final-cta dark" id="contact">
     <div class="wrap">
       <p class="eyebrow">Free in-home estimate</p>
@@ -952,11 +986,10 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         document.getElementById("ty-appt").hidden = false;
       }
     }
-    var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I just booked an in-person estimate for my bathroom" + (info && info.when ? " on " + info.when : "") + (info && info.address ? " at " + info.address : "") + ". I’d like to confirm or reschedule it.";
+    var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I’m confirming my in-person bathroom estimate" + (info && info.when ? " on " + info.when : "") + (info && info.address ? " at " + info.address : "") + ". Here are some photos of my bathroom now and how I’d like it to look:";
     document.getElementById("ty-wa").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
     var box = document.getElementById("ty-video");
-    box.classList.toggle("wide", !VSL_VERTICAL);
-    if (VSL_URL) box.innerHTML = videoEmbed(VSL_URL);
+    if (box) { box.classList.toggle("wide", !VSL_VERTICAL); if (VSL_URL) box.innerHTML = videoEmbed(VSL_URL); }
     ty.hidden = false;
     document.body.classList.add("ty-on");
     window.scrollTo(0, 0);
