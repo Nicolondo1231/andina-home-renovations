@@ -830,7 +830,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
   /* ---------- Settings for the thank-you view ---------- */
-  var META_PIXEL_ID = "";        /* paste your Meta Pixel ID here, e.g. "123456789012345" */
+  var META_PIXEL_ID = "2768330376919637";   /* Andina CRM dataset (Meta Pixel ID) */
   var VSL_URL = "";              /* YouTube, Vimeo or .mp4 link for the video; empty shows a placeholder */
   var VSL_VERTICAL = true;       /* true for a 9:16 phone video, false for 16:9 */
   var WHATSAPP_NUMBER = "12019817239";
@@ -849,6 +849,8 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     fbq("track", "PageView");
   }
   function track(ev, params) { if (window.fbq && META_PIXEL_ID) fbq("track", ev, params || {}); }
+  var leadTracked = false;   /* Lead once per visit: when the contact info is given, or at booking if that came first */
+  function trackLead() { if (leadTracked) return; leadTracked = true; track("Lead", { content_name: "Bathroom quote" }); }
 
   function videoEmbed(url) {
     var m;
@@ -1005,6 +1007,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     };
   }
   function sendContact() {
+    if (!bookedDone) trackLead();
     if (!PORTAL_HOOK || bookedDone) return;
     var body = crmLead(); body.partial = true;
     fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body), keepalive: true })
@@ -1125,7 +1128,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     })
       .then(function () {
         $("cal-booking").classList.add("ok"); $("cal-booking-text").textContent = "Booked!";
-        track("Lead", { content_name: "Bathroom quote", content_category: lead.project || "Bathroom", status: lead.timeline || "" });
+        trackLead();
         track("Schedule", { content_name: "In-person estimate" });
         setTimeout(function () {
           showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address, when: when });
