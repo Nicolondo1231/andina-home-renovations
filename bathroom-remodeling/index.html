@@ -455,13 +455,12 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
 .faq-item p { padding: 0 20px 18px; color: var(--steel); line-height: 1.6; }
 .ty-wrap { gap: 22px; }
 .ty-head { display: grid; gap: 12px; justify-items: center; text-align: center; }
-.ty-check { width: 96px; height: 96px; border-radius: 50%; animation: typop .45s cubic-bezier(.3,1.6,.5,1) both, tyglow 2.4s ease-out .5s infinite; }
-@keyframes typop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes tyglow { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.55); } 100% { box-shadow: 0 0 0 22px rgba(34,197,94,0); } }
+.ty-check { width: 76px; height: 76px; color: #4ade80; filter: drop-shadow(0 6px 18px rgba(74,222,128,.35)); }
 .ty-check svg { width: 100%; height: 100%; }
-.ty-check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tydraw .4s ease-out .35s forwards; }
+.ty-check circle { stroke-dasharray: 151; stroke-dashoffset: 151; animation: tydraw .6s ease-out .1s forwards; }
+.ty-check path { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tydraw .4s ease-out .6s forwards; }
 @keyframes tydraw { to { stroke-dashoffset: 0; } }
-@media (prefers-reduced-motion: reduce) { .ty-check path { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .ty-check circle, .ty-check path { stroke-dashoffset: 0; } }
 .ty-head h1 { font-size: clamp(1.9rem, 8vw, 2.9rem); font-weight: 850; font-stretch: 110%; letter-spacing: -0.02em; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
 .ty-sub { color: #ffffff; font-size: 1.05rem; text-shadow: 0 1px 3px rgba(0,0,0,.6); }
 .ty-watch { display: grid; justify-items: center; gap: 6px; margin-top: 4px; }
@@ -612,7 +611,7 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
     <div class="qhero-bg" aria-hidden="true"><img src="/images/dark-marble.webp" alt=""></div>
     <div class="qwrap ty-wrap">
       <div class="ty-head">
-        <span class="ty-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="25" fill="#22c55e"/><path d="M15 27l7 7 15-16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="ty-check" aria-hidden="true"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <h1 id="ty-title">Your in-person estimate has been <span class="metal-text">scheduled!</span></h1>
         <p class="ty-sub" id="ty-sub">We’ll call you shortly to confirm the day and time.</p>
         <div class="ty-appt" id="ty-appt" hidden>
