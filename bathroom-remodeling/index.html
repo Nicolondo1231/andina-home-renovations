@@ -470,6 +470,11 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .page-consent a { color: inherit; text-decoration: underline; }
 
 /* ---------- Below the fold (bathroom landing) ---------- */
+.founders-photo { margin: 0; border-radius: 20px; overflow: hidden; background: var(--espresso); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
+.founders-photo img { width: 100%; height: auto; display: block; }
+.founders-photo figcaption { display: grid; gap: 2px; text-align: center; padding: 16px 16px 20px; color: var(--white); }
+.founders-photo strong { font-family: var(--display); font-stretch: 112%; font-size: 1.45rem; }
+.founders-photo span { color: var(--copper-hi); font-weight: 700; font-size: 0.8rem; letter-spacing: .14em; text-transform: uppercase; }
 .duo { display: grid; justify-items: center; gap: 6px; text-align: center; background: var(--espresso); background-image: var(--grain); border-radius: 22px; padding: 30px 20px 26px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
 .duo-photos { display: flex; justify-content: center; margin-bottom: 10px; }
 .duo-photos img { width: 136px; height: 136px; border-radius: 50%; object-fit: cover; object-position: 50% 25%; border: 4px solid var(--espresso); box-shadow: 0 0 0 2px var(--copper-hi); }
@@ -479,6 +484,9 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
 .duo-logo { width: 150px; height: auto; margin-top: 14px; }
 .ba-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
 .ba-grid .ba-card { width: calc((100% - 44px) / 3); }
+.ba-grid .ba-card.ba-feature { width: 100%; }
+.ba-grid .ba-feature img { aspect-ratio: 1400 / 788; }
+@media (max-width: 900px) { .ba-grid .ba-card.ba-feature { width: calc(100% + 40px); margin-inline: -20px; } .ba-feature img { border-radius: 0; } .ba-feature figcaption { padding-inline: 20px; } }
 @media (max-width: 900px) { .ba-grid { gap: 26px; } .ba-grid .ba-card { width: 100%; } }
 .ba-card { margin: 0; display: grid; gap: 12px; }
 .ba-card img { width: 100%; height: auto; aspect-ratio: 900 / 1240; object-fit: cover; border-radius: 16px; box-shadow: 0 30px 60px -28px rgba(0,0,0,.8); background: var(--ink-2); }
@@ -703,6 +711,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         <h2>Real bathrooms. <span class="metal-text">Real results.</span></h2>
       </div>
       <div class="ba-grid">
+        <figure class="ba-card ba-feature"><img src="/images/ba-feature.webp" alt="Primary bathroom remodel, before and after" width="1400" height="788"><figcaption>Primary bathroom remodel<span class="stars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></span></figcaption></figure>
         <figure class="ba-card"><img src="/images/ba-main.webp" alt="Full bathroom remodel, before and after" loading="lazy" width="900" height="1240"><figcaption>Full bathroom remodel<span class="stars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></span></figcaption></figure>
         <figure class="ba-card"><img src="/images/ba-vanity.webp" alt="Bathroom vanity, before and after" loading="lazy" width="900" height="1240"><figcaption>Marble vanity &amp; LED mirror<span class="stars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></span></figcaption></figure>
         <figure class="ba-card"><img src="/images/ba-hall.webp" alt="Bathroom with new walk-in shower, before and after" loading="lazy" width="900" height="1240"><figcaption>Walk-in glass shower<span class="stars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg></span></figcaption></figure>
@@ -719,12 +728,10 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
         <p class="eyebrow">Meet the founders</p>
         <h2>The people behind every bathroom.</h2>
       </div>
-      <div class="duo">
-        <div class="duo-photos"><img src="/images/founder-a.webp" alt="Sebastian, co-founder"><img src="/images/founder-b.webp" alt="Nimesh, co-founder"></div>
-        <p class="duo-names">Sebastian &amp; Nimesh</p>
-        <p class="duo-role">Co-founders</p>
-        <img class="duo-logo" src="/images/logo-dark-bg.webp" alt="Andina Home Renovations" width="900" height="424">
-      </div>
+      <figure class="founders-photo">
+        <img src="/images/founders.webp" alt="Nicolas and Sebastian, founders of Andina Home Renovations" width="1536" height="1024" loading="lazy">
+        <figcaption><strong>Nicolas &amp; Sebastian</strong><span>Founders, Andina Home Renovations</span></figcaption>
+      </figure>
       <div class="story">
         <p>For the past 5 years we’ve been remodeling bathrooms for families across New Jersey. We started Andina because homeowners deserve a contractor who shows up when they say, keeps the house clean, and builds it right the first time.</p>
         <p>When you book an estimate, it’s one of us who comes to your home. We listen to what you want, give you a clear price, and stay with your project until the last tile is set.</p>
