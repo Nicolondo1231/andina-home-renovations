@@ -3,6 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Landing stats for the Nevado portal (Landing page tab): "arrive" goes out first thing, before the page finishes loading.
+   Each event counts once per visit; no names or contact info are sent here. */
+(function () {
+  var U = "https://clientes.nevadomedia.com/api/hooks/web/andinahomerenovations/stats?k=plRRfDA9OlrjSuffyBwfy3vK";
+  var off = /\/thank-you\/?$/.test(location.pathname), sid, ad = "", q = [], t = 0;
+  function rnd() { return Math.random().toString(36).slice(2, 12) + Date.now().toString(36); }
+  try { sid = sessionStorage.getItem("andina-sid"); if (!sid) { sid = rnd(); sessionStorage.setItem("andina-sid", sid); } } catch (e) { sid = rnd(); }
+  try { ad = new URLSearchParams(location.search).get("utm_content") || JSON.parse(sessionStorage.getItem("andina-utm") || "{}").utm_content || ""; } catch (e) {}
+  function flush() {
+    if (!q.length) return;
+    var body = JSON.stringify({ sid: sid, ev: q.splice(0), ad: ad, url: location.origin + location.pathname, page: "Bathroom remodeling" });
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(U, body))) fetch(U, { method: "POST", headers: { "Content-Type": "text/plain" }, body: body, keepalive: true }); } catch (e) {}
+  }
+  window.lpStat = function (e) { if (off) return; q.push(e); clearTimeout(t); t = setTimeout(flush, 600); };
+  if (!off) { q.push("arrive"); flush(); }
+  addEventListener("pagehide", flush);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flush(); });
+})();
+</script>
 <meta property="og:title" content="Get your luxury bathroom quote | Andina Home Renovations">
 <meta property="og:description" content="General contractors in New Jersey: bathrooms, kitchens, floors, stairs, painting and exteriors.">
 <meta property="og:image" content="https://andinahomerenovations.com/images/bath-main-after.webp">
@@ -960,6 +980,21 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
   var qform = document.getElementById("qform"), qback = document.getElementById("qback");
   var qstep = document.getElementById("qstep"), qpct = document.getElementById("qpct"), qbar = document.getElementById("qbar"), qtop = document.getElementById("qtop");
   var TOTAL = 5, step = 1, lead = { project: "", timeline: "" };
+  /* Landing stats (see the script at the top): page loaded, device, how far they scroll, button clicks */
+  function lp(e) { try { if (window.lpStat) window.lpStat(e); } catch (_) {} }
+  function lpLoaded() { lp("load"); lp((window.matchMedia && matchMedia("(pointer: coarse)").matches) || innerWidth < 768 ? "dev:m" : "dev:d"); }
+  if (document.readyState === "complete") lpLoaded(); else addEventListener("load", lpLoaded);
+  var lpDepth = 0;
+  addEventListener("scroll", function () {
+    var h = document.documentElement.scrollHeight - innerHeight; if (h <= 0) return;
+    var p = (scrollY + 1) / h;
+    [25, 50, 75, 100].forEach(function (s) { if (lpDepth < s && p >= (s === 100 ? 0.97 : s / 100)) { lpDepth = s; lp("sc" + s); } });
+  }, { passive: true });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a"); if (!a) return;
+    var href = a.getAttribute("href") || "";
+    if (href === "#quote") lp("cta"); else if (href.indexOf("tel:") === 0) lp("call");
+  }, true);
   function $(id) { return document.getElementById(id); }
   function pane(n) { return qform.querySelector('.qpane[data-step="' + n + '"]'); }
   function go(n, backwards) {
@@ -968,6 +1003,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     next.classList.toggle("back", !!backwards);
     next.classList.add("on");
     step = n;
+    if (n === 3 || n === 4 || n === "dq") lp(n === "dq" ? "dq" : "s" + n);
     var done = n === "dq" || n > TOTAL;
     qtop.hidden = done; qbar.parentNode.hidden = done;
     qback.hidden = n === 1 || done;
@@ -992,6 +1028,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     b.addEventListener("click", function () {
       qform.querySelectorAll('.qpane[data-step="1"] .qopt').forEach(function (x) { x.classList.toggle("picked", x === b); });
       lead.project = b.dataset.val;
+      lp("start"); lp("a:project=" + b.dataset.val);
       setTimeout(function () { go(2); }, 220);
     });
   });
@@ -1001,6 +1038,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     b.addEventListener("click", function () {
       qform.querySelectorAll(".qtime").forEach(function (x) { x.classList.toggle("picked", x === b); });
       lead.timeline = b.dataset.val;
+      lp("a:timeline=" + b.dataset.val);
       var ok = b.dataset.ok === "1";
       setTimeout(function () { go(ok ? 3 : "dq"); }, 220);
     });
@@ -1023,6 +1061,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
       box.classList.add("ok");
       txt.textContent = nj ? "Good news! We have openings in your area." : "We mainly serve New Jersey, but we’ll review your request.";
       lead.zip = z;
+      lp("a:zip=" + (nj ? "nj" : "out"));
       setTimeout(function () { checking = false; box.hidden = true; go(4); }, nj ? 1000 : 1800);
     }, 1100);
   }
@@ -1070,7 +1109,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     };
   }
   function sendContact() {
-    if (!bookedDone) trackLead();
+    if (!bookedDone) { trackLead(); lp("contact"); }
     if (!PORTAL_HOOK || bookedDone) return;
     var body = crmLead(); body.partial = true;
     fetch(PORTAL_HOOK, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(body), keepalive: true })
@@ -1191,7 +1230,7 @@ body.ty-on main > :not(#thank-you), body.ty-on .mbar { display: none !important;
     })
       .then(function () {
         $("cal-booking").classList.add("ok"); $("cal-booking-text").textContent = "Booked!";
-        trackLead();
+        trackLead(); lp("contact"); lp("booked");
         track("Schedule", { content_name: "In-person estimate" });
         setTimeout(function () {
           showThankYou({ first: data.Name.split(" ")[0], name: data.Name, phone: data.Phone, address: data.Address, when: when });
