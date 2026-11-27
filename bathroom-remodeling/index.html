@@ -620,6 +620,18 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
         </div>
       </div>
 
+      <div class="ty-watch">
+        <p class="ty-before">Before we go, watch this</p>
+        <span class="ty-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span>
+      </div>
+
+      <div class="ty-video" id="ty-video">
+        <div class="ty-video-ph">
+          <span class="ty-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <p>Watch this before we do your in-person estimate</p>
+        </div>
+      </div>
+
       <div class="ty-next">
         <p class="ty-step">One last step</p>
         <h2>Confirm on WhatsApp &amp; send us photos</h2>
@@ -948,7 +960,7 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
 
   /* ---------- Settings for the thank-you view ---------- */
   var META_PIXEL_ID = "2768330376919637";   /* Andina CRM dataset (Meta Pixel ID) */
-  var VSL_URL = "";              /* YouTube, Vimeo or .mp4 link for the video; empty shows a placeholder */
+  var VSL_URL = "https://www.dropbox.com/scl/fi/e5dyl4xq2g05d2drdw20t/VSL-Andina-Edit-v1-FINAL.mp4?rlkey=mktjmiy8r2j0qfhhyeervoicd&raw=1";              /* YouTube, Vimeo or .mp4 link for the video; empty shows a placeholder */
   var VSL_VERTICAL = true;       /* true for a 9:16 phone video, false for 16:9 */
   var WHATSAPP_NUMBER = "12019817239";
   /* Booking calendar: which days and times homeowners can pick */
@@ -973,7 +985,7 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
     var m;
     if ((m = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/))) return '<iframe src="https://www.youtube.com/embed/' + m[1] + '?rel=0&playsinline=1" title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     if ((m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/))) return '<iframe src="https://player.vimeo.com/video/' + m[1] + '?playsinline=1" title="Video" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
-    return '<video src="' + url.replace(/"/g, "") + '" controls playsinline preload="metadata"></video>';
+    return '<video src="' + url.replace(/"/g, "") + '#t=0.1" controls playsinline preload="metadata"></video>';
   }
   function showThankYou(info) {
     var ty = document.getElementById("thank-you");
@@ -989,7 +1001,19 @@ body.ty-on main > :not(#thank-you):not(#work):not(#reviews):not(.trust):not(#faq
     var msg = "Hi! " + (info && info.first ? "This is " + info.name + ". " : "") + "I’m confirming my in-person bathroom estimate" + (info && info.when ? " on " + info.when : "") + (info && info.address ? " at " + info.address : "") + ". Here are some photos of my bathroom now and how I’d like it to look:";
     document.getElementById("ty-wa").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
     var box = document.getElementById("ty-video");
-    if (box) { box.classList.toggle("wide", !VSL_VERTICAL); if (VSL_URL) box.innerHTML = videoEmbed(VSL_URL); }
+    if (box) {
+      box.classList.toggle("wide", !VSL_VERTICAL);
+      if (VSL_URL) {
+        box.innerHTML = videoEmbed(VSL_URL);
+        var v = box.querySelector("video");
+        if (v) v.addEventListener("loadedmetadata", function () {
+          if (!v.videoWidth) return;
+          box.classList.toggle("wide", v.videoWidth > v.videoHeight);
+          box.style.aspectRatio = v.videoWidth + " / " + v.videoHeight;
+          if (v.videoHeight > v.videoWidth) box.style.maxWidth = "min(100%, calc(78svh * " + (v.videoWidth / v.videoHeight).toFixed(4) + "))";
+        });
+      }
+    }
     ty.hidden = false;
     document.body.classList.add("ty-on");
     window.scrollTo(0, 0);
